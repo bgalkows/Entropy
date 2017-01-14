@@ -9,6 +9,9 @@ public class HealthBar : MonoBehaviour
     public int currentHealth;
     public Slider healthSlider;
     public Image damageImg;
+    public Image heart1;
+    public Image heart2;
+    public Image heart3;
     public float flashSpeed = 5f;
     public int livesLeft = 3;
     public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
@@ -40,7 +43,27 @@ public class HealthBar : MonoBehaviour
 
         damaged = false;
 
-	}
+        if (livesLeft == 3)
+        {
+
+        }
+
+        else if (livesLeft == 2)
+        {
+            heart3.color = new Color(0, 0, 0, 0);
+        }
+
+        else if (livesLeft == 1)
+        {
+            heart2.color = new Color(0, 0, 0, 0);
+        }
+
+        else
+        {
+            heart1.color = new Color(0, 0, 0, 0);
+        }
+
+    }
 
     public void TakeDamage(int amount)
     {
