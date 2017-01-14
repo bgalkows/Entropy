@@ -100,7 +100,7 @@ public class Spawner : MonoBehaviour
                 for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
                 {
                     explosiveSpawners.Add(Instantiate(bulletSpawner));
-                    explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 /spawnerSpawners[i].GetComponent<Ring>().getNumber()*i,25);
+                    explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()), 50, .05f, 5,false);
                 }
             }
         }
@@ -166,17 +166,6 @@ public class Spawner : MonoBehaviour
         spreads[spreads.Count - 1].GetComponent<AimedSpread>().setShotSpeed(speed);
         spreads[spreads.Count - 1].GetComponent<AimedSpread>().setNum(number);
         spreads[spreads.Count - 1].GetComponent<AimedSpread>().setSpawnOnBoss(onBoss);
-    }
-
-    void addSpawner(float deg, int delay, float speed, int inc, bool onBoss)
-    {
-        explosiveSpawners.Add(new GameObject());
-        explosiveSpawners[explosiveSpawners.Count - 1].AddComponent<BulletSpawner>();
-        explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().setDegree(deg);
-        explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().setDelay(delay);
-        explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().setShotSpeed(speed);
-        explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().setInc(inc);
-        explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().setOnBoss(onBoss);
     }
 
     void addSpawnerSpawner(int num,int delay,float speed,bool onBoss)
