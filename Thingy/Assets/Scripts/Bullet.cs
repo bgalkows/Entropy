@@ -5,8 +5,9 @@ using UnityEngine;
 public class Bullet : MonoBehaviour {
     public GameObject shot, player;
     private Vector2 position;
-    private float speed, direction, xAwayFromTarget, yAwayFromTarget;
-    private bool isAimed;
+    private float speed, direction, xAwayFromTarget, yAwayFromTarget, spr;
+    private int cur, number;
+    private bool isAimed, isSpread;
     //Spiral shots will use direction, aimed shots will use the AwayFromTargets
     //The AwayFromTarget variables I used in my earlier game were the difference between the bullet's x and y and the target's x and y
     // Use this for initialization
@@ -17,7 +18,13 @@ public class Bullet : MonoBehaviour {
     public void Update() {
         if (isAimed)
         {
-            position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))), position.y - (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))));
+            position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90))));
+            shot.transform.position = position;
+        }
+        else if (isSpread)
+        {
+         // position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90-(spr/2)+(cur/number*spr)))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur / number * spr)))));
+            position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) -90 -(spr/2)+(cur*spr/number)))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget))-90- (spr / 2) + (cur*spr/number)))));
             shot.transform.position = position;
         }
         else
@@ -42,6 +49,17 @@ public class Bullet : MonoBehaviour {
         yAwayFromTarget = yAway;
         isAimed = true;
         position = new Vector2(x, y);
+    }
+    public void SpawnSpread(float x, float y, float s, float xAway, float yAway,int current,int total, float spread)
+    {
+        speed = s;
+        xAwayFromTarget = xAway;
+        yAwayFromTarget = yAway;
+        position = new Vector2(x, y);
+        cur = current;
+        number = total;
+        spr = spread;
+        isSpread = true;
     }
 
     public float getSpeed() { return speed; }

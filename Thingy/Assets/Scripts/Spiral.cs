@@ -52,6 +52,7 @@ public class Spiral : MonoBehaviour {
     public void setXDiff(float f) { xDiff = f; }
     public void setYDiff(float f) { yDiff = f; }
     public void setSpiralPos(Vector2 v) { pos = v; }
+    public void setSpawnOnBoss(bool b) { spiralSpawnsOnBoss = b; }
     //spiral methods - gets
     public bool getSpiralDir() { return cw; }
     public bool getSpawnOnBoss() { return spiralSpawnsOnBoss; }

@@ -171,7 +171,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shot: {fileID: 1636645848115024, guid: 6543efd923deec14ca770d83aef804d8, type: 2}
   boss: {fileID: 380339192}
-  player: {fileID: 0}
+  player: {fileID: 1363123431}
 --- !u!135 &380339196
 SphereCollider:
   m_ObjectHideFlags: 0

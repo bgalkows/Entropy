@@ -16,6 +16,7 @@ public class Spawner : MonoBehaviour
     //lists of bullets
     private List<GameObject> bullets;
     private List<Spiral> spirals;
+    private List<AimedSpread> spreads;
     //the SizeDiffs are for in case we want to adjust the position the bullets spawn from on the object
     // Use this for initialization
     void Start()
@@ -27,19 +28,16 @@ public class Spawner : MonoBehaviour
         speed = 0;
         direction = 0;
         spirals = new List<Spiral>();
+        spreads = new List<AimedSpread>();
         for (int i = 0; i < 3; i++)
         {
-            Spiral s = new Spiral();
-            spirals.Add(s);
-            spirals[i].setDeg(i * 120);
-            spirals[i].setSpiralSpawnDelay(5-i);
-            spirals[i].setSpiralShotSpeed(.1f);
-            spirals[i].setSpiralDegInc(5-i);
+            addSpiral(i * 120, 5 - 1, .1f, 5 - i, true);
             if (i % 2 == 0)
             {
                 spirals[i].swapSpiralDir();
             }
         }
+        addSpread(90, 10, .3f, 4, true);
     }
 
     // Update is called once per frame
@@ -70,6 +68,20 @@ public class Spawner : MonoBehaviour
                 bullets[bullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirals[i].getSpiralPos().x + spirals[i].getXDiff(), spirals[i].getSpiralPos().y + spirals[i].getYDiff(), spirals[i].getSpiralShotSpeed(), spirals[i].getDeg());
             }
         }
+        for (int i = 0; i < spreads.Count; i++)
+        {
+            spreads[i].setPos(position);
+            if (count % spreads[i].getSpawnDelay() == 0)
+            {
+                float xAway = player.transform.position.x - position.x;
+                float yAway = player.transform.position.y - position.y;
+                for (int b = 0; b < spreads[i].getNumber(); b++)
+                {
+                    bullets.Add((GameObject)Instantiate(shot));
+                    bullets[bullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].getPos().x + spreads[i].getXDiff(), spreads[i].getPos().y + spreads[i].getYDiff(), spreads[i].getShotSpeed(), xAway, yAway, b ,spreads[i].getNumber()-1, spreads[i].getSpread());
+                }
+            }
+        }
         List<GameObject> tmp = bullets;
         for (int i = 0; i < bullets.Count; i++)
         {
@@ -78,6 +90,26 @@ public class Spawner : MonoBehaviour
             if (tmpX > 800 || tmpX < -20 || tmpY > 800 || tmpY < -20) { Destroy(tmp[i], .5f); tmp.RemoveAt(i); }
         }
         bullets = tmp;
+    }
+
+    void addSpiral(float deg, int delay, float speed, int inc, bool onBoss)
+    {
+        spirals.Add(new Spiral());
+        spirals[spirals.Count - 1].setDeg(deg);
+        spirals[spirals.Count - 1].setSpiralSpawnDelay(delay);
+        spirals[spirals.Count - 1].setSpiralShotSpeed(speed);
+        spirals[spirals.Count - 1].setSpiralDegInc(inc);
+        spirals[spirals.Count - 1].setSpawnOnBoss(onBoss);
+    }
+
+    void addSpread(float spread, int delay, float speed, int number, bool onBoss)
+    {
+        spreads.Add(new AimedSpread());
+        spreads[spreads.Count - 1].setSpread(spread);
+        spreads[spreads.Count - 1].setSpawnDelay(delay);
+        spreads[spreads.Count - 1].setShotSpeed(speed);
+        spreads[spreads.Count - 1].setNum(number);
+        spreads[spreads.Count - 1].setSpawnOnBoss(onBoss);
     }
 
     //boss methods - sets
