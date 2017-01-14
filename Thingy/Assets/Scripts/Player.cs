@@ -129,7 +129,7 @@ public class Player : MonoBehaviour {
     {
         currentHealth = 100;
         Debug.Log("You respawned with 100 health.");
-        setPosition(0, 0);
+        setPosition(1, 0);
     }
 
 
@@ -161,6 +161,16 @@ public class Player : MonoBehaviour {
         if(currentHealth<=0)
         {
             Death();
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        //Debug.Log("HIT");
+        if(other.gameObject.tag == "Bullet")
+        {
+            Debug.Log("Hit by bullet");
+            TakeDamage(20);
         }
     }
 }

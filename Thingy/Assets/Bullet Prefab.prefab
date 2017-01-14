@@ -21,10 +21,10 @@ GameObject:
   - component: {fileID: 4725357663547186}
   - component: {fileID: 212631223931607986}
   - component: {fileID: 114151664660317478}
-  - component: {fileID: 135866988830429906}
+  - component: {fileID: 58510427254351832}
   m_Layer: 0
   m_Name: Bullet Prefab
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,6 +42,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &58510427254351832
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1636645848115024}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1
 --- !u!114 &114151664660317478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -55,18 +69,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shot: {fileID: 1636645848115024}
   player: {fileID: 1937865341692674, guid: a2791c189ee78b74b9218c535cf5fee4, type: 2}
---- !u!135 &135866988830429906
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1636645848115024}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.08
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212631223931607986
 SpriteRenderer:
   m_ObjectHideFlags: 1
