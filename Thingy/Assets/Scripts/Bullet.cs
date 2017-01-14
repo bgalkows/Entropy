@@ -66,7 +66,7 @@ public class Bullet : MonoBehaviour {
         if (other.gameObject.tag == "Player") 
         {
             Debug.Log("BULLET HIT PLAYER");
-            Destroy(gameObject);
+            Destroy(gameObject);    
         }
     }
 

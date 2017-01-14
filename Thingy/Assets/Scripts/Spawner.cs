@@ -14,12 +14,13 @@ public class Spawner : MonoBehaviour
     private Vector2 position;
 
     //lists of bullets
-    private List<GameObject> bullets,explosives,spirals,spreads,spawnerSpawners,explosiveSpawners;
+    private List<GameObject> spBullets,aimBullets,explosives,spirals,spreads,spawnerSpawners,explosiveSpawners;
     //the SizeDiffs are for in case we want to adjust the position the bullets spawn from on the object
     // Use this for initialization
     void Start()
     {
-        bullets = new List<GameObject>();
+        spBullets = new List<GameObject>();
+        aimBullets = new List<GameObject>();
         count = 0;
         xSizeDiff = 0;
         ySizeDiff = 0;
@@ -34,7 +35,7 @@ public class Spawner : MonoBehaviour
         explosives = new List<GameObject>();
         for (int i = 0; i < 3; i++)
         {
-            addSpiral(i * 120, 5 - 1, .1f, 5 - i, true);
+            addSpiral(i * 120, 5 + i, .05f, 20 - i*2, true);
             if (i % 2 == 0)
             {
                 spirals[i].GetComponent<Spiral>().swapSpiralDir();
@@ -42,7 +43,7 @@ public class Spawner : MonoBehaviour
         }
         //Have these come in as the boss loses health in the actual
         addSpread(90, 10, .3f, 4, true);
-        addSpread(150, 15, .2f, 5, true);
+        addSpread(150, 20, .08f, 5, true);
         addSpawnerSpawner(8, 100, .1f, true);
     }
 
@@ -70,8 +71,9 @@ public class Spawner : MonoBehaviour
             spirals[i].GetComponent<Spiral>().setSpiralPos(position);
             if (count % spirals[i].GetComponent<Spiral>().getSpiralSpawnDelay() == 0)
             {
-                bullets.Add(Instantiate(shot));
-                bullets[bullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirals[i].GetComponent<Spiral>().getSpiralPos().x + spirals[i].GetComponent<Spiral>().getXDiff(), spirals[i].GetComponent<Spiral>().getSpiralPos().y + spirals[i].GetComponent<Spiral>().getYDiff(), spirals[i].GetComponent<Spiral>().getSpiralShotSpeed(), spirals[i].GetComponent<Spiral>().getDeg());
+                spBullets.Add(Instantiate(shot));
+                spBullets[spBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirals[i].GetComponent<Spiral>().getSpiralPos().x + spirals[i].GetComponent<Spiral>().getXDiff(), spirals[i].GetComponent<Spiral>().getSpiralPos().y + spirals[i].GetComponent<Spiral>().getYDiff(), spirals[i].GetComponent<Spiral>().getSpiralShotSpeed(), spirals[i].GetComponent<Spiral>().getDeg());
+                spBullets[spBullets.Count - 1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.cyan);
             }
         }
         for (int i = 0; i < spreads.Count; i++)
@@ -83,9 +85,10 @@ public class Spawner : MonoBehaviour
                 float yAway = player.transform.position.y - position.y;
                 for (int b = 0; b < spreads[i].GetComponent<AimedSpread>().getNumber(); b++)
                 {
-                    bullets.Add(Instantiate(shot));
-                    if (spreads[i].GetComponent<AimedSpread>().getNumber() > 1) { bullets[bullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].transform.position.x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().transform.position.y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber() - 1, spreads[i].GetComponent<AimedSpread>().getSpread()); }
-                    else { bullets[bullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].transform.position.x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().transform.position.y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber(), spreads[i].GetComponent<AimedSpread>().getSpread()); }
+                    aimBullets.Add(Instantiate(shot));
+                    if (spreads[i].GetComponent<AimedSpread>().getNumber() > 1) { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber() - 1, spreads[i].GetComponent<AimedSpread>().getSpread()); }
+                    else { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber(), spreads[i].GetComponent<AimedSpread>().getSpread()); }
+                    aimBullets[aimBullets.Count-1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.red);
                 }
             }
         }
@@ -108,18 +111,29 @@ public class Spawner : MonoBehaviour
                // explosives.Add((
             }
         }
-        for(int i=bullets.Count-1;i>=0;i--)
+        for(int i=spBullets.Count-1;i>=0;i--)
         {
-            GameObject b = bullets[i];
-            if (b == null) { bullets.Remove(b); }
+            GameObject b = spBullets[i];
+            if (b == null) { spBullets.Remove(b); }
             else
             {
                 float tmpX = b.transform.position.x;
                 float tmpY = b.transform.position.y;
-                if (tmpX > 100 || tmpX < -20 || tmpY > 100 || tmpY < -20) { bullets.Remove(b); }
+                if (tmpX > 20 || tmpX < -20 || tmpY > 20 || tmpY < -20) { spBullets.Remove(b); }
             }
         }
-        for(int i=explosiveSpawners.Count-1;i>=0;i--)
+        for (int i = aimBullets.Count - 1; i >= 0; i--)
+        {
+            GameObject b = aimBullets[i];
+            if (b == null) { aimBullets.Remove(b); }
+            else
+            {
+                float tmpX = b.transform.position.x;
+                float tmpY = b.transform.position.y;
+                if (tmpX > 20 || tmpX < -20 || tmpY > 20 || tmpY < -20) { aimBullets.Remove(b); }
+            }
+        }
+        for (int i=explosiveSpawners.Count-1;i>=0;i--)
         {
             GameObject b = explosiveSpawners[i];
             if (b == null) { explosiveSpawners.Remove(b); }
@@ -127,7 +141,7 @@ public class Spawner : MonoBehaviour
             {
                 float tmpX = b.transform.position.x;
                 float tmpY = b.transform.position.y;
-                if (tmpX > 100 || tmpX < -20 || tmpY > 100 || tmpY < -20) { explosiveSpawners.Remove(b); }
+                if (tmpX > 20 || tmpX < -20 || tmpY > 20 || tmpY < -20) { explosiveSpawners.Remove(b); }
             }
         }
     }
