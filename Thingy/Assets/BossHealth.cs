@@ -16,7 +16,7 @@ public class BossHealth : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        currentBossHealth = currentBossHealth;
+        currentBossHealth = startingBossHealth;
 	}
 	
 	// Update is called once per frame
