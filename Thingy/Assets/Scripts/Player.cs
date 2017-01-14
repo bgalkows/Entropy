@@ -8,7 +8,8 @@ public class Player : MonoBehaviour {
     public int lives;
     public int currentHealth;
     public bool invincible;
-
+    private float minX, maxX, minY, maxY;
+    public Collider2D collide;
     HealthBar HealthBar;
 
 	// Use this for initialization
@@ -17,7 +18,19 @@ public class Player : MonoBehaviour {
         lives = 3;
         currentHealth = 100;
         HealthBar = GameObject.Find("Player").GetComponent<HealthBar>();
-	}
+
+        //Camera shenanigans
+        float camDistance = Vector3.Distance(transform.position, Camera.main.transform.position);
+        Vector2 bottomCorner = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, camDistance));
+        Vector2 topCorner = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, camDistance));
+
+        minX = bottomCorner.x;
+        maxX = topCorner.x;
+        minY = bottomCorner.y;
+        maxY = topCorner.y;
+
+        collide = this.GetComponent<Collider2D>();
+    }
 
     // Update is called once per frame
     void Update()
@@ -115,6 +128,21 @@ public class Player : MonoBehaviour {
             }
         }
 
+
+
+        // Get current position
+        Vector3 pos = transform.position;
+
+        // Horizontal contraint
+        if (pos.x- (collide.bounds.size.x/2 ) < minX) pos.x = minX+ (collide.bounds.size.x );
+        if (pos.x+ (collide.bounds.size.x/2 ) > maxX) pos.x = maxX- (collide.bounds.size.x );
+
+        // vertical contraint
+        if (pos.y-(collide.bounds.size.y/2 ) < minY) pos.y = minY+ (collide.bounds.size.y );
+        if (pos.y+ (collide.bounds.size.y/2 ) > maxY) pos.y = maxY- (collide.bounds.size.y );
+
+        // Update position
+        transform.position = pos;
 
         if (Input.GetKey(KeyCode.Z))
         {
