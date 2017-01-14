@@ -853,13 +853,7 @@ Prefab:
       propertyPath: speed
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 212245799892597580, guid: a2791c189ee78b74b9218c535cf5fee4,
-        type: 2}
-      propertyPath: m_Color.a
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114196449692231744, guid: a2791c189ee78b74b9218c535cf5fee4, type: 2}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a2791c189ee78b74b9218c535cf5fee4, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1080593067 stripped
@@ -889,7 +883,7 @@ MonoBehaviour:
   livesLeft: 3
   flashColor: {r: 1, g: 0, b: 0, a: 0.1}
   isDead: 0
-  damaged: 0
+  damaged: 1
 --- !u!61 &1080593069
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -924,23 +918,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &1080593071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1080593067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8510a063a1a91584f84b5d3850eb4195, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 4
-  lives: 0
-  currentHealth: 0
-  invincible: 0
-  collide: {fileID: 0}
-  renderer: {fileID: 0}
 --- !u!1 &1124170133
 GameObject:
   m_ObjectHideFlags: 0
