@@ -40,44 +40,36 @@ public class Player : MonoBehaviour {
             // DIAGONALS
             if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.UpArrow))
             {
-                Debug.Log("shift-Move Right/Up");
                 this.transform.Translate((speed / 2) / (Mathf.Sqrt(2)) * Time.deltaTime, (speed / 2) / (Mathf.Sqrt(2)) * Time.deltaTime, 0);
             }
             else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.DownArrow))
             {
-                Debug.Log("shift-Move Right/Down");
                 this.transform.Translate((speed / 2) / (Mathf.Sqrt(2)) * Time.deltaTime, (-speed / 2) / (Mathf.Sqrt(2)) * Time.deltaTime, 0);
             }
             else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.UpArrow))
             {
-                Debug.Log("shift-Move Left/Up");
                 this.transform.Translate((-speed / 2) / (Mathf.Sqrt(2)) * Time.deltaTime, (speed / 2) / (Mathf.Sqrt(2)) * Time.deltaTime, 0);
             }
             else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.DownArrow))
             {
-                Debug.Log("shift-Move Left/Down");
                 this.transform.Translate((-speed / 2) / (Mathf.Sqrt(2)) * Time.deltaTime, (-speed / 2) / (Mathf.Sqrt(2)) * Time.deltaTime, 0);
             }
 
             // REGULAR
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                Debug.Log("shift-Move right");
                 this.transform.Translate((speed / 2) * Time.deltaTime, 0, 0);
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
-                Debug.Log("shift-Move left");
                 this.transform.Translate((-speed / 2) * Time.deltaTime, 0, 0);
             }
             else if (Input.GetKey(KeyCode.DownArrow))
             {
-                Debug.Log("shift-Move down");
                 this.transform.Translate(0, (-speed / 2) * Time.deltaTime, 0);
             }
             else if (Input.GetKey(KeyCode.UpArrow))
             {
-                Debug.Log("shift-Move up");
                 this.transform.Translate(0, (speed / 2) * Time.deltaTime, 0);
             }
         }
@@ -86,44 +78,36 @@ public class Player : MonoBehaviour {
             //DIAGONALS
             if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.UpArrow))
             {
-                Debug.Log("Move Right/Up");
                 this.transform.Translate(speed / (Mathf.Sqrt(2)) * Time.deltaTime, speed / (Mathf.Sqrt(2)) * Time.deltaTime, 0);
             }
             else if (Input.GetKey(KeyCode.RightArrow) && Input.GetKey(KeyCode.DownArrow))
             {
-                Debug.Log("Move Right/Down");
                 this.transform.Translate(speed / (Mathf.Sqrt(2)) * Time.deltaTime, -speed / (Mathf.Sqrt(2)) * Time.deltaTime, 0);
             }
             else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.UpArrow))
             {
-                Debug.Log("Move Left/Up");
                 this.transform.Translate(-speed / (Mathf.Sqrt(2)) * Time.deltaTime, speed / (Mathf.Sqrt(2)) * Time.deltaTime, 0);
             }
             else if (Input.GetKey(KeyCode.LeftArrow) && Input.GetKey(KeyCode.DownArrow))
             {
-                Debug.Log("Move Left/Down");
                 this.transform.Translate(-speed / (Mathf.Sqrt(2)) * Time.deltaTime, -speed / (Mathf.Sqrt(2)) * Time.deltaTime, 0);
             }
 
             //REGULAR
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                Debug.Log("Move right");
                 this.transform.Translate(speed * Time.deltaTime, 0, 0);
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
-                Debug.Log("Move left");
                 this.transform.Translate(-speed * Time.deltaTime, 0, 0);
             }
             else if (Input.GetKey(KeyCode.DownArrow))
             {
-                Debug.Log("Move down");
                 this.transform.Translate(0, -speed * Time.deltaTime, 0);
             }
             else if (Input.GetKey(KeyCode.UpArrow))
             {
-                Debug.Log("Move up");
                 this.transform.Translate(0, speed * Time.deltaTime, 0);
             }
         }
