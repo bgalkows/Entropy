@@ -11,8 +11,8 @@ public class Player : MonoBehaviour {
     private float minX, maxX, minY, maxY;
     public Collider2D collide;
     HealthBar HealthBar;
-
-    public SpriteRenderer renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+    public PlayerBullet playerBullet;
+    public SpriteRenderer renderer;
     //Get the renderer via GetComponent or have it cached previously
                                                                                                            // Use this for initialization
     void Awake()
@@ -31,7 +31,9 @@ public class Player : MonoBehaviour {
         minY = bottomCorner.y;
         maxY = topCorner.y;
 
+        playerBullet = this.GetComponent<PlayerBullet>();
         collide = this.GetComponent<Collider2D>();
+        renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -133,7 +135,7 @@ public class Player : MonoBehaviour {
         if (Input.GetKey(KeyCode.Z))
         {
             Debug.Log("Z press");
-            //shooting here later
+            playerBullet.SpawnDirectional(transform.position.x, transform.position.y, 8, 270); 
         }
     }
        
