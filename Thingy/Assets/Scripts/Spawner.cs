@@ -15,8 +15,10 @@ public class Spawner : MonoBehaviour
 
     //lists of bullets
     private List<GameObject> bullets;
+    private List<ExplodingShot> explosives;
     private List<Spiral> spirals;
     private List<AimedSpread> spreads;
+    private List<BulletSpawner> explosiveSpawners;
     //the SizeDiffs are for in case we want to adjust the position the bullets spawn from on the object
     // Use this for initialization
     void Start()
@@ -29,6 +31,8 @@ public class Spawner : MonoBehaviour
         direction = 0;
         spirals = new List<Spiral>();
         spreads = new List<AimedSpread>();
+        explosiveSpawners = new List<BulletSpawner>();
+        explosives = new List<ExplodingShot>();
         for (int i = 0; i < 3; i++)
         {
             addSpiral(i * 120, 5 - 1, .1f, 5 - i, true);
@@ -37,8 +41,13 @@ public class Spawner : MonoBehaviour
                 spirals[i].swapSpiralDir();
             }
         }
+        //Have these come in as the boss loses health in the actual
         addSpread(90, 10, .3f, 4, true);
         addSpread(150, 15, .2f, 5, true);
+        for (int i = 0; i < 8; i++)
+        {
+            addSpawner(i * 45, 100, .05f, 45, true);
+        }
     }
 
     // Update is called once per frame
@@ -83,6 +92,14 @@ public class Spawner : MonoBehaviour
                 }
             }
         }
+        for (int i = 0; i < explosiveSpawners.Count; i++)
+        {
+            explosiveSpawners[i].setPosition(position);
+            if (count % spreads[i].getSpawnDelay() == 0)
+            {
+                explosives.Add((
+            }
+        }
         List<GameObject> tmp = bullets;
         for (int i = 0; i < bullets.Count; i++)
         {
@@ -111,6 +128,16 @@ public class Spawner : MonoBehaviour
         spreads[spreads.Count - 1].setShotSpeed(speed);
         spreads[spreads.Count - 1].setNum(number);
         spreads[spreads.Count - 1].setSpawnOnBoss(onBoss);
+    }
+
+    void addSpawner(float deg, int delay, float speed, int inc, bool onBoss)
+    {
+        explosiveSpawners.Add(new BulletSpawner());
+        explosiveSpawners[explosiveSpawners.Count - 1].setDegree(deg);
+        explosiveSpawners[explosiveSpawners.Count - 1].setDelay(delay);
+        explosiveSpawners[explosiveSpawners.Count - 1].setShotSpeed(speed);
+        explosiveSpawners[explosiveSpawners.Count - 1].setInc(inc);
+        explosiveSpawners[explosiveSpawners.Count - 1].setOnBoss(onBoss);
     }
 
     //boss methods - sets

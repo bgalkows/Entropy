@@ -23,7 +23,6 @@ public class Bullet : MonoBehaviour {
         }
         else if (isSpread)
         {
-         // position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90-(spr/2)+(cur/number*spr)))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur / number * spr)))));
             position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) -90 -(spr/2)+(cur*spr/number)))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget))-90- (spr / 2) + (cur*spr/number)))));
             shot.transform.position = position;
         }
