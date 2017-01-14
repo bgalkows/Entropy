@@ -17,7 +17,7 @@ public class HealthBar : MonoBehaviour
     public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
     public bool isDead = false;
 
-    bool damaged;
+    public bool damaged;
 
     // Use this for initialization
     void Start ()
@@ -70,6 +70,7 @@ public class HealthBar : MonoBehaviour
         damaged = true;
 
         currentHealth -= amount;
+
 
         healthSlider.value = currentHealth;
 

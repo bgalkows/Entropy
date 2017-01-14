@@ -7,11 +7,14 @@ public class Player : MonoBehaviour {
     public int lives;
     public int currentHealth;
 
+    HealthBar HealthBar;
+
 	// Use this for initialization
 	void Awake()
     {
         lives = 3;
-        currentHealth = 100; 
+        currentHealth = 100;
+        HealthBar = GameObject.Find("Player").GetComponent<HealthBar>();
 	}
 
     // Update is called once per frame
@@ -128,6 +131,7 @@ public class Player : MonoBehaviour {
     public void Respawn()
     {
         currentHealth = 100;
+        HealthBar.healthSlider.value = currentHealth;
         Debug.Log("You respawned with 100 health.");
         setPosition(1, 0);
     }
@@ -139,6 +143,7 @@ public class Player : MonoBehaviour {
         {
             Respawn();
             lives--;
+            HealthBar.livesLeft--;
             Debug.Log(lives + " lives left!");
         }
         else
@@ -158,6 +163,9 @@ public class Player : MonoBehaviour {
         currentHealth -= amount;
         Debug.Log("Player lost" + amount + "health, " + currentHealth + "remaining.");
 
+        HealthBar.damaged = true; 
+
+        HealthBar.healthSlider.value = currentHealth;
         if(currentHealth<=0)
         {
             Death();

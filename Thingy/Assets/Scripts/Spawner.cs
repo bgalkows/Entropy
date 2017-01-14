@@ -7,38 +7,39 @@ public class Spawner : MonoBehaviour
     //Boss script will change variables on this based on health loss
 
     //Boss related
-    public GameObject shot, boss;
+    public GameObject shot, boss,player;
     private bool isAimed,aimedShots;
     private int count;
     private float speed, direction, xAwayFromTarget, yAwayFromTarget, xSizeDiff, ySizeDiff;
     private Vector2 position;
-    //spiral related
-    private bool spiralSpawnsOnBoss, isSpiral,cw;
-    private float aimDegree,spiralSpeed,spiralDir,spXDiff,spYDiff,spSpeed,spShotSpeed;
-    private int spiralSpawnDelay, spiralDegIncrement;
-    private Vector2 spiralPos;
 
     //lists of bullets
-    private List<GameObject> spiral, ring, aimed, spread;
+    private List<GameObject> bullets;
+    private List<Spiral> spirals;
     //the SizeDiffs are for in case we want to adjust the position the bullets spawn from on the object
     // Use this for initialization
     void Start()
     {
-        spiral = new List<GameObject>();
+        bullets = new List<GameObject>();
         count = 0;
         xSizeDiff = 0;
         ySizeDiff = 0;
         speed = 0;
         direction = 0;
-        isSpiral = true;
-        spiralSpawnsOnBoss = true;
-        spXDiff = 0;
-        spYDiff = 0;
-        spiralDegIncrement = 20;
-        spiralSpawnDelay = 5;
-        spShotSpeed = .1f;
-        cw = true;
-        isAimed = false;
+        spirals = new List<Spiral>();
+        for (int i = 0; i < 3; i++)
+        {
+            Spiral s = new Spiral();
+            spirals.Add(s);
+            spirals[i].setDeg(i * 120);
+            spirals[i].setSpiralSpawnDelay(5-i);
+            spirals[i].setSpiralShotSpeed(.1f);
+            spirals[i].setSpiralDegInc(5-i);
+            if (i % 2 == 0)
+            {
+                spirals[i].swapSpiralDir();
+            }
+        }
     }
 
     // Update is called once per frame
@@ -57,47 +58,25 @@ public class Spawner : MonoBehaviour
             boss.transform.position = position;
         }
         //Spiral spawner movement
-        if (isSpiral)
+        for (int i = 0; i < spirals.Count; i++)
         {
-            if (spiralSpawnsOnBoss) { spiralPos = position; }
-            if (count % spiralSpawnDelay == 0)
+            spirals[i].incrementDeg();
+            spirals[i].setSpiralPos(position);
+            if (count % spirals[i].getSpiralSpawnDelay() == 0)
             {
-                if (cw)
-                {
-                    if (aimDegree >= 360) { aimDegree = 0; }
-                    aimDegree += spiralDegIncrement;
-                }
-                else
-                {
-                    if (aimDegree <= 0) { aimDegree = 360; }
-                    aimDegree -= spiralDegIncrement;
-                }
-                spiral.Add((GameObject)Instantiate(shot));
-                spiral[spiral.Count - 1].GetComponent<Bullet>().SpawnDirectional(spiralPos.x + spXDiff, spiralPos.y + spYDiff, spShotSpeed, aimDegree);
+                bullets.Add((GameObject)Instantiate(shot));
+                bullets[bullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirals[i].getSpiralPos().x + spirals[i].getXDiff(), spirals[i].getSpiralPos().y + spirals[i].getYDiff(), spirals[i].getSpiralShotSpeed(), spirals[i].getDeg());
             }
-            List<GameObject> tmp = spiral;
-           for (int i = 0; i < spiral.Count; i++)
-            {
-                float tmpX = spiral[i].transform.position.x;
-                float tmpY = spiral[i].transform.position.y;
-                if (tmpX > 800 || tmpX < -20 || tmpY > 800 || tmpY < -20) { Destroy(tmp[i], .5f); tmp.RemoveAt(i); }
-            }
-            spiral = tmp;
         }
+        List<GameObject> tmp = bullets;
+        for (int i = 0; i < bullets.Count; i++)
+        {
+            float tmpX = bullets[i].transform.position.x;
+            float tmpY = bullets[i].transform.position.y;
+            if (tmpX > 800 || tmpX < -20 || tmpY > 800 || tmpY < -20) { Destroy(tmp[i], .5f); tmp.RemoveAt(i); }
+        }
+        bullets = tmp;
     }
-    //spiral methods - sets
-    public void swapSpiralDir() { cw = !cw; }
-    public void setSpiralSpawnDelay(int i) { spiralSpawnDelay = i; }
-    public void setSpiralDegInc(int i) { spiralDegIncrement = i; }
-    public void setSpiralPosSpeed(float f) { spSpeed = f; }
-    public void setSpiralShotSpeed(float f) { spShotSpeed = f; }
-    //spiral methods - gets
-    public bool getSpiralDir() { return cw; }
-    public int getSpiralSpawnDealy() { return spiralSpawnDelay; }
-    public int getSpiralDegInc() { return spiralDegIncrement; }
-    public float getSpiralPosSpeed() { return spSpeed; }
-    public float getSpiralShotSpeed() { return spShotSpeed; }
-    public Vector2 getSpiralPos() { return spiralPos; }
 
     //boss methods - sets
     void setSizeDiff(int x, int y) { xSizeDiff = x; ySizeDiff = y; }
