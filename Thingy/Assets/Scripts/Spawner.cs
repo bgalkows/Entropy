@@ -38,6 +38,7 @@ public class Spawner : MonoBehaviour
             }
         }
         addSpread(90, 10, .3f, 4, true);
+        addSpread(150, 15, .2f, 5, true);
     }
 
     // Update is called once per frame
