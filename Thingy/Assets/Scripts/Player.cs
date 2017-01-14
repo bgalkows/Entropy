@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
-    public float speed = 2;
+    public float speed = 4;
     public int lives;
     public int currentHealth;
     public bool invincible;
