@@ -9,17 +9,6 @@ public class Spiral : MonoBehaviour {
     private Vector2 pos;
     // Use this for initialization
     void Start () {
-        cw = true;
-        deg = 0;
-        dir = 0;
-        spd = 0;
-        shotSpd = .1f;
-        count = 0;
-        xDiff = 0;
-        yDiff = 0;
-        spiralSpawnDelay = 5;
-        spiralDegIncrement = 5;
-        pos = new Vector2(0, 0);
 	}
 	// Update is called once per frame
 	void Update () {

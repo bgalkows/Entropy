@@ -5,22 +5,11 @@ using UnityEngine;
 public class BulletSpawner : MonoBehaviour {
     public GameObject shot;
     private Vector2 position;
-    private float shotSpeed, direction, xAway, yAway, xDiff, yDiff, speed, selfDir, selfSpd;
+    private float shotSpeed, direction, xAway, yAway, xDiff, yDiff, selfDir, selfSpd;
     private int count, rate, increment;
     private bool isAimed, onBoss;
     // Use this for initialization
     void Start() {
-        position = new Vector2(0, 0);
-        xDiff = 0;
-        yDiff = 0;
-        xAway = 0;
-        yAway = 0;
-        shotSpeed = .05f;
-        direction = 0;
-        count = 0;
-        rate = 100;
-        increment = 45;
-        isAimed = false;
     }
 
     // Update is called once per frame
@@ -28,14 +17,32 @@ public class BulletSpawner : MonoBehaviour {
     {
         if (isAimed)
         {
-            position = new Vector2(position.x + (selfSpd * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAway, yAway)) - 90))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAway, yAway)) - 90))));
+            position = new Vector2(position.x + (selfSpd * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAway, yAway)) - 90))), position.y - (selfSpd * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAway, yAway)) - 90))));
             shot.transform.position = position;
         }
         else
         {
-            position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * selfDir)), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * selfDir)));
+            position = new Vector2(position.x + (selfSpd * Mathf.Cos(Mathf.Deg2Rad * selfDir)), position.y - (selfSpd * Mathf.Sin(Mathf.Deg2Rad * selfDir)));
             shot.transform.position = position;
         }
+    }
+    public void SpawnDirectional(float x, float y, float s, float dir,int delay)
+    {
+        selfSpd = s;
+        selfDir = dir;
+        isAimed = false;
+        position = new Vector2(x, y);
+        rate = delay;
+    }
+
+    public void SpawnAimed(float x, float y, float s, float xA, float yA,int delay)
+    {
+        selfSpd = s;
+        xAway= xA;
+        yAway= yA;
+        isAimed = true;
+        position = new Vector2(x, y);
+        rate = delay;
     }
     //gets
     public float getShotSpeed() { return shotSpeed; }
