@@ -7,7 +7,7 @@ public class Spawner : MonoBehaviour
     //Boss script will change variables on this based on health loss
 
     //Boss related
-    public GameObject shot;
+    public GameObject shot, boss;
     private bool isAimed,aimedShots;
     private int count;
     private float speed, direction, xAwayFromTarget, yAwayFromTarget, xSizeDiff, ySizeDiff;
@@ -24,17 +24,21 @@ public class Spawner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        spiral = new List<GameObject>();
         count = 0;
         xSizeDiff = 0;
         ySizeDiff = 0;
+        speed = 0;
+        direction = 0;
+        isSpiral = true;
         spiralSpawnsOnBoss = true;
         spXDiff = 0;
         spYDiff = 0;
-        speed = 0;
-        direction = 0;
-        isAimed = false;
-        isSpiral = true;
+        spiralDegIncrement = 10;
+        spiralSpawnDelay = 5;
+        spShotSpeed = .1f;
         cw = true;
+        isAimed = false;
     }
 
     // Update is called once per frame
@@ -45,10 +49,12 @@ public class Spawner : MonoBehaviour
         if (!isAimed)
         {
             position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * direction)), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * direction)));
+            boss.transform.position = position;
         }
         else
         {
             position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))), position.y - (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))));
+            boss.transform.position = position;
         }
         //Spiral spawner movement
         if (isSpiral)
@@ -66,15 +72,15 @@ public class Spawner : MonoBehaviour
                     if (aimDegree <= 0) { aimDegree = 360; }
                     aimDegree -= spiralDegIncrement;
                 }
-                spiral.Add(Instantiate(shot));
+                spiral.Add((GameObject)Instantiate(shot));
                 spiral[spiral.Count - 1].GetComponent<Bullet>().SpawnDirectional(spiralPos.x + spXDiff, spiralPos.y + spYDiff, spShotSpeed, aimDegree);
             }
             List<GameObject> tmp = spiral;
-            for (int i = 0; i < spiral.Count; i++)
+           for (int i = 0; i < spiral.Count; i++)
             {
                 float tmpX = spiral[i].transform.position.x;
                 float tmpY = spiral[i].transform.position.y;
-                if (tmpX > 800 || tmpX < -20 || tmpY > 800 || tmpY < -20) { Destroy(tmp[i], .5f); }
+                if (tmpX > 800 || tmpX < -20 || tmpY > 800 || tmpY < -20) { Destroy(tmp[i], .5f); tmp.RemoveAt(i);print(tmpX.ToString() + ' ' + tmpY.ToString()); }
             }
             spiral = tmp;
         }
