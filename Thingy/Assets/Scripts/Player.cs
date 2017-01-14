@@ -12,8 +12,10 @@ public class Player : MonoBehaviour {
     public Collider2D collide;
     HealthBar HealthBar;
 
-	// Use this for initialization
-	void Awake()
+    public SpriteRenderer renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+    //Get the renderer via GetComponent or have it cached previously
+                                                                                                           // Use this for initialization
+    void Awake()
     {
         lives = 3;
         currentHealth = 100;
@@ -158,18 +160,6 @@ public class Player : MonoBehaviour {
         this.transform.position = new Vector2(x, y);
     }
 
-    //public void Respawn()
-    //{
-    //    invincible = true;
-    //    updateLine(); 
-    //    invincible = false;
-
-    //    currentHealth = 100; 
-    //    HealthBar.healthSlider.value = currentHealth;
-    //    Debug.Log("You respawned with 100 health.");
-    //    setPosition(0, -4);
-    //}
-
     void Respawn()
     {
         StartCoroutine("waitThreeSeconds");
@@ -184,7 +174,42 @@ public class Player : MonoBehaviour {
         setPosition(0, -4);
 
         invincible = true;
-        yield return new WaitForSeconds(3);
+        //flashing!
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.5f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.25f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.25f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.15f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.15f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
         invincible = false;
     }
 
