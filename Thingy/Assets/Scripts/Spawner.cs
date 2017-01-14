@@ -7,20 +7,21 @@ public class Spawner : MonoBehaviour
     //Boss script will change variables on this based on health loss
 
     //Boss related
-    public GameObject shot,bulletSpawner, boss,player;
+    public GameObject shot,bulletSpawner, boss,player,exploder;
     private bool isAimed,aimedShots;
     private int count;
     private float speed, direction, xAwayFromTarget, yAwayFromTarget, xSizeDiff, ySizeDiff;
     private Vector2 position;
 
     //lists of bullets
-    private List<GameObject> spBullets,aimBullets,explosives,spirals,spreads,spawnerSpawners,explosiveSpawners;
+    private List<GameObject> spBullets,aimBullets,explosives,spirals,spreads,spawnerSpawners,explosiveSpawners,explosionBullets;
     //the SizeDiffs are for in case we want to adjust the position the bullets spawn from on the object
     // Use this for initialization
     void Start()
     {
         spBullets = new List<GameObject>();
         aimBullets = new List<GameObject>();
+        explosionBullets = new List<GameObject>();
         count = 0;
         xSizeDiff = 0;
         ySizeDiff = 0;
@@ -61,8 +62,75 @@ public class Spawner : MonoBehaviour
         else
         {
             position = boss.transform.position;
-          //position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))), position.y - (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))));
-          //boss.transform.position = position;
+            //position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))), position.y - (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))));
+            //boss.transform.position = position;
+        }
+        for (int i = spBullets.Count - 1; i >= 0; i--)
+        {
+            GameObject b = spBullets[i];
+            if (b == null) { spBullets.Remove(b); }
+            else
+            {
+                float tmpX = b.GetComponent<Bullet>().getPos().x;
+                float tmpY = b.GetComponent<Bullet>().getPos().y;
+                if ((tmpX > 10) || (tmpX < -10) || (tmpY > 10) || (tmpY < -10)) { Destroy(b); }
+            }
+        }
+        for (int i = aimBullets.Count - 1; i >= 0; i--)
+        {
+            GameObject b = aimBullets[i];
+            if (b == null) { aimBullets.Remove(b); }
+            else
+            {
+                float tmpX = b.GetComponent<Bullet>().getPos().x;
+                float tmpY = b.GetComponent<Bullet>().getPos().y;
+                if (tmpX > 10 || tmpX < -10 || tmpY > 10 || tmpY < -10) { Destroy(b); }
+            }
+        }
+        for (int i = explosives.Count - 1; i >= 0; i--)
+        {
+            GameObject b = explosives[i];
+            if (b == null) { explosives.Remove(b); }
+            else if (b.GetComponent<ExplodingShot>().getSpd() < 0 && !b.GetComponent<ExplodingShot>().getExploded())
+            {
+                //explodes it once direction reverses - aboslutely impossible to dodge with more than 2 fired with low speed
+                for (int c = 0; c < b.GetComponent<ExplodingShot>().getNum(); c++)
+                {
+                    //explosionBullets.Add(Instantiate(shot));
+                    //explosionBullets[explosionBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(b.transform.position.x, b.transform.position.y, b.GetComponent<ExplodingShot>().getShotSpd(), c * 360 / b.GetComponent<ExplodingShot>().getNum());
+                }
+                b.GetComponent<ExplodingShot>().explosion();
+                //Destroy(b);
+            }
+            else if (b.GetComponent<ExplodingShot>().getCD() <=0) { Destroy(b); }
+            else
+            {
+                float tmpX = b.GetComponent<ExplodingShot>().getPos().x;
+                float tmpY = b.GetComponent<ExplodingShot>().getPos().y;
+                if (tmpX > 20 || tmpX < -20 || tmpY > 20 || tmpY < -20) { Destroy(b); }
+            }
+        }
+        for (int i = explosionBullets.Count - 1; i >= 0; i--)
+        {
+            GameObject b = explosionBullets[i];
+            if (b == null) { explosionBullets.Remove(b); }
+            else
+            {
+                float tmpX = b.GetComponent<Bullet>().getPos().x;
+                float tmpY = b.GetComponent<Bullet>().getPos().y;
+                if (tmpX > 10 || tmpX < -10 || tmpY > 10 || tmpY < -10) { Destroy(b); }
+            }
+        }
+        for (int i = explosiveSpawners.Count - 1; i >= 0; i--)
+        {
+            GameObject b = explosiveSpawners[i];
+            if (b == null) { explosiveSpawners.Remove(b); }
+            else
+            {
+                float tmpX = b.GetComponent<BulletSpawner>().getPosition().x;
+                float tmpY = b.GetComponent<BulletSpawner>().getPosition().y;
+                if (tmpX > 10 || tmpX < -10 || tmpY > 10 || tmpY < -10) { Destroy(b); }
+            }
         }
         //Spiral spawner movement
         for (int i = 0; i < spirals.Count; i++)
@@ -100,48 +168,19 @@ public class Spawner : MonoBehaviour
                 for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
                 {
                     explosiveSpawners.Add(Instantiate(bulletSpawner));
-                    explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()), 50, .05f, 5,false);
+                    explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()), 50, .15f, 5,false,(360/(spawnerSpawners[i].GetComponent<Ring>().getNumber()))/2);
                 }
             }
         }
         for (int i = 0; i < explosiveSpawners.Count; i++)
         {
-            if (count % explosiveSpawners[i].GetComponent<BulletSpawner>().getDelay() == 0)
+            if (count % explosiveSpawners[i].GetComponent<BulletSpawner>().getDelay() == 0&&!(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y<-3))
             {
-               // explosives.Add((
-            }
-        }
-        for(int i=spBullets.Count-1;i>=0;i--)
-        {
-            GameObject b = spBullets[i];
-            if (b == null) { spBullets.Remove(b); }
-            else
-            {
-                float tmpX = b.transform.position.x;
-                float tmpY = b.transform.position.y;
-                if (tmpX > 20 || tmpX < -20 || tmpY > 20 || tmpY < -20) { spBullets.Remove(b); }
-            }
-        }
-        for (int i = aimBullets.Count - 1; i >= 0; i--)
-        {
-            GameObject b = aimBullets[i];
-            if (b == null) { aimBullets.Remove(b); }
-            else
-            {
-                float tmpX = b.transform.position.x;
-                float tmpY = b.transform.position.y;
-                if (tmpX > 20 || tmpX < -20 || tmpY > 20 || tmpY < -20) { aimBullets.Remove(b); }
-            }
-        }
-        for (int i=explosiveSpawners.Count-1;i>=0;i--)
-        {
-            GameObject b = explosiveSpawners[i];
-            if (b == null) { explosiveSpawners.Remove(b); }
-            else
-            {
-                float tmpX = b.transform.position.x;
-                float tmpY = b.transform.position.y;
-                if (tmpX > 20 || tmpX < -20 || tmpY > 20 || tmpY < -20) { explosiveSpawners.Remove(b); }
+                for (int b = 0; b < explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(); b++)
+                {
+                    explosives.Add(Instantiate(exploder));
+                    explosives[explosives.Count - 1].GetComponent<ExplodingShot>().SpawnDirectional(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().x, explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y, explosiveSpawners[i].GetComponent<BulletSpawner>().getShotSpd(), 360 * b / explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(), false, 4, .08f,400);
+                }
             }
         }
     }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletSpawner : MonoBehaviour {
     public GameObject shot;
     private Vector2 position;
-    private float shotSpeed, xAway, yAway, xDiff, yDiff, selfDir, selfSpd;
+    private float shotSpeed, xAway, yAway, xDiff, yDiff, selfDir, selfSpd,offset;
     private int count, rate, increment, num;
     private bool isAimed, onBoss,isBomber;
     // Use this for initialization
@@ -22,11 +22,11 @@ public class BulletSpawner : MonoBehaviour {
         }
         else
         {
-            position = new Vector2(position.x + (selfSpd * Mathf.Cos(Mathf.Deg2Rad * selfDir)), position.y - (selfSpd * Mathf.Sin(Mathf.Deg2Rad * selfDir)));
+            position = new Vector2(position.x + (selfSpd * Mathf.Cos(Mathf.Deg2Rad * (selfDir+offset))), position.y - (selfSpd * Mathf.Sin(Mathf.Deg2Rad * (selfDir+offset))));
             shot.transform.position = position;
         }
     }
-    public void SpawnDirectional(float x, float y, float s, float dir, int delay, float shotSpd, int number, bool bomber)
+    public void SpawnDirectional(float x, float y, float s, float dir, int delay, float shotSpd, int number, bool bomber,float degOffset)
     {
         selfSpd = s;
         selfDir = dir;
@@ -36,6 +36,7 @@ public class BulletSpawner : MonoBehaviour {
         shotSpeed = shotSpd;
         num = number;
         isBomber = bomber;
+        offset = degOffset;
     }
 
     //aimed is unfinished for now
@@ -57,12 +58,14 @@ public class BulletSpawner : MonoBehaviour {
     public float getSelfDir() { return selfDir; }
     public float getSelfSpd() { return selfSpd; }
     public float getShotSpd() { return shotSpeed; }
+    public float getOffSet() { return offset; }
     public int getNum() { return num; }
     public int getDelay() { return rate; }
     public int getInc() { return increment; }
     public bool getAimed() { return isAimed; }
     public bool getOnBoss() { return onBoss; }
     public bool getIsBomber() { return isBomber; }
+    public Vector2 getPosition() { return position; }
     //sets
     public void setPosition(Vector2 v) { position = v; }
     public void setShotSpeed(float f) { shotSpeed = f; }
@@ -73,12 +76,12 @@ public class BulletSpawner : MonoBehaviour {
     public void setSelfDir(float f) { selfDir = f; }
     public void setSelfSpd(float f) { selfSpd = f; }
     public void setShotSpd(float f) { shotSpeed = f; }
+    public void setOffset(float f) { offset = f; }
     public void setNum(int i) { num = i; }
     public void setAimed(bool b) { isAimed = b; }
     public void setOnBoss(bool b) { onBoss = b; }
     public void setInc(int i) { increment = i; }
     public void setDelay(int i) { rate = i; }
     public void setIsBomber(bool b) { isBomber = b; }
-    Vector2 getPosition() { return position; }
 
 }

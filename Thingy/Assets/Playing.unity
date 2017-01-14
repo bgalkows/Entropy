@@ -173,6 +173,7 @@ MonoBehaviour:
     type: 2}
   boss: {fileID: 380339192}
   player: {fileID: 1363123431}
+  exploder: {fileID: 1567768529453142, guid: f93d688037988f2498acfc69c82780e2, type: 2}
 --- !u!135 &380339196
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -592,12 +593,12 @@ Prefab:
     - target: {fileID: 224050448352465876, guid: c35e9d9947a79d945b83f836a1ac7ce5,
         type: 2}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.96
       objectReference: {fileID: 0}
     - target: {fileID: 224050448352465876, guid: c35e9d9947a79d945b83f836a1ac7ce5,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c35e9d9947a79d945b83f836a1ac7ce5, type: 2}
