@@ -8,7 +8,6 @@ public class HealthBar : MonoBehaviour
     public int startingHealth = 100;
     public int currentHealth;
     public Slider healthSlider;
-    public Image healthImg;
     public Image damageImg;
     public float flashSpeed = 5f;
     public int livesLeft = 3;
