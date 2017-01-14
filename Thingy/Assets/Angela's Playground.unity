@@ -666,11 +666,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c5eb47c6f375e42a48b4253435688f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingBossHealth: 100
-  currentBossHealth: 0
-  bossHealthSlider: {fileID: 1746805752}
-  bossIsDead: 0
-  bossDamaged: 0
 --- !u!1 &781677446
 GameObject:
   m_ObjectHideFlags: 0
@@ -940,7 +935,12 @@ MonoBehaviour:
   currentHealth: 0
   invincible: 0
   collide: {fileID: 0}
-  renderer: {fileID: 0}
+  renderer: {fileID: 1080593072}
+--- !u!212 &1080593072 stripped
+SpriteRenderer:
+  m_PrefabParentObject: {fileID: 212245799892597580, guid: a2791c189ee78b74b9218c535cf5fee4,
+    type: 2}
+  m_PrefabInternal: {fileID: 1073331492}
 --- !u!1 &1124170133
 GameObject:
   m_ObjectHideFlags: 0
