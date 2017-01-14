@@ -61,6 +61,15 @@ public class Bullet : MonoBehaviour {
         isSpread = true;
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player") 
+        {
+            Debug.Log("BULLET HIT PLAYER");
+            Destroy(gameObject);
+        }
+    }
+
     public float getSpeed() { return speed; }
     public float getDir() { return direction; }
     public float getXDiff() { return xAwayFromTarget; } 
