@@ -44,13 +44,15 @@ public class Bullet : MonoBehaviour {
         position = new Vector2(x, y);
     }
 
-    void onCollisionEnter(Collision c)
+    void onTriggerEnter2D(Collider2D other)
     {
-        if (c.gameObject.tag=="Player")
+        if (other.gameObject.tag=="Player")
         {
             //make the function for taking damage public in the player class
+            player.GetComponent<Player>().TakeDamage(20);
             Destroy(shot, .5f);
             Destroy(this, .5f);
+            print("true");
         }
     }
     public float getSpeed() { return speed; }

@@ -34,7 +34,7 @@ public class Spawner : MonoBehaviour
         spiralSpawnsOnBoss = true;
         spXDiff = 0;
         spYDiff = 0;
-        spiralDegIncrement = 10;
+        spiralDegIncrement = 20;
         spiralSpawnDelay = 5;
         spShotSpeed = .1f;
         cw = true;
@@ -80,7 +80,7 @@ public class Spawner : MonoBehaviour
             {
                 float tmpX = spiral[i].transform.position.x;
                 float tmpY = spiral[i].transform.position.y;
-                if (tmpX > 800 || tmpX < -20 || tmpY > 800 || tmpY < -20) { Destroy(tmp[i], .5f); tmp.RemoveAt(i);print(tmpX.ToString() + ' ' + tmpY.ToString()); }
+                if (tmpX > 800 || tmpX < -20 || tmpY > 800 || tmpY < -20) { Destroy(tmp[i], .5f); tmp.RemoveAt(i); }
             }
             spiral = tmp;
         }
