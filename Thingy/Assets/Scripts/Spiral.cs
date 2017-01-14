@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,4 +54,5 @@ public class Spiral : MonoBehaviour {
     public float getYDiff() { return yDiff; }
     public float getDeg() { return deg; }
     public Vector2 getSpiralPos() { return pos; }
+    
 }
