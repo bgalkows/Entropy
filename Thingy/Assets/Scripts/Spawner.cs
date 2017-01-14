@@ -97,7 +97,7 @@ public class Spawner : MonoBehaviour
             explosiveSpawners[i].setPosition(position);
             if (count % spreads[i].getSpawnDelay() == 0)
             {
-                explosives.Add((
+               // explosives.Add((
             }
         }
         List<GameObject> tmp = bullets;

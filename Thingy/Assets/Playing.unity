@@ -413,7 +413,7 @@ MonoBehaviour:
   livesLeft: 3
   flashColor: {r: 1, g: 0, b: 0, a: 0.1}
   isDead: 0
-  damaged: 1
+  damaged: 0
 --- !u!61 &1363123437
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -899,7 +899,6 @@ GameObject:
   - component: {fileID: 1901722884}
   - component: {fileID: 1901722886}
   - component: {fileID: 1901722885}
-  - component: {fileID: 1901722887}
   m_Layer: 5
   m_Name: damageImg
   m_TagString: Untagged
@@ -958,18 +957,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1901722883}
---- !u!114 &1901722887
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1901722883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 679c810c54143dc4fbf46f1ed4547dec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shot: {fileID: 0}
 --- !u!1 &1991814628
 GameObject:
   m_ObjectHideFlags: 0
