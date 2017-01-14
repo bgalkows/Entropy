@@ -108,22 +108,28 @@ public class Spawner : MonoBehaviour
                // explosives.Add((
             }
         }
-        List<GameObject> tmp = bullets;
-        for (int i = 0; i < bullets.Count; i++)
+        for(int i=bullets.Count-1;i>=0;i--)
         {
-            float tmpX = bullets[i].transform.position.x;
-            float tmpY = bullets[i].transform.position.y;
-            if (tmpX > 800 || tmpX < -20 || tmpY > 800 || tmpY < -20) { Destroy(tmp[i], .5f); tmp.RemoveAt(i); }
+            GameObject b = bullets[i];
+            if (b == null) { bullets.Remove(b); }
+            else
+            {
+                float tmpX = b.transform.position.x;
+                float tmpY = b.transform.position.y;
+                if (tmpX > 100 || tmpX < -20 || tmpY > 100 || tmpY < -20) { bullets.Remove(b); }
+            }
         }
-        bullets = tmp;
-        List<GameObject> Tmp = explosiveSpawners;
-        for (int i = 0; i < explosiveSpawners.Count; i++)
+        for(int i=explosiveSpawners.Count-1;i>=0;i--)
         {
-            float tmpX = explosiveSpawners[i].transform.position.x;
-            float tmpY = explosiveSpawners[i].transform.position.y;
-            if (tmpX > 800 || tmpX < -20 || tmpY > 800 || tmpY < -20) { Destroy(tmp[i], .5f); Tmp.RemoveAt(i); }
+            GameObject b = explosiveSpawners[i];
+            if (b == null) { explosiveSpawners.Remove(b); }
+            else
+            {
+                float tmpX = b.transform.position.x;
+                float tmpY = b.transform.position.y;
+                if (tmpX > 100 || tmpX < -20 || tmpY > 100 || tmpY < -20) { explosiveSpawners.Remove(b); }
+            }
         }
-        explosiveSpawners = Tmp;
     }
 
     void addSpiral(float deg, int delay, float speed, int inc, bool onBoss)
