@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -218,7 +219,7 @@ public class Player : MonoBehaviour {
     public void GameOver()
     {
         Debug.Log("GAME OVER");
-        //SceneManager.LoadScene("GameOverScene");
+        SceneManager.LoadScene("GameOver");
     }
 
     public void TakeDamage(int amount)

@@ -637,7 +637,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 72bcc570117e8354badf32ace9defde5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -851,6 +851,36 @@ Prefab:
     - target: {fileID: 212245799892597580, guid: a2791c189ee78b74b9218c535cf5fee4,
         type: 2}
       propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114708316729133944, guid: a2791c189ee78b74b9218c535cf5fee4,
+        type: 2}
+      propertyPath: healthSlider
+      value: 
+      objectReference: {fileID: 561944237}
+    - target: {fileID: 114708316729133944, guid: a2791c189ee78b74b9218c535cf5fee4,
+        type: 2}
+      propertyPath: damageImg
+      value: 
+      objectReference: {fileID: 283435157}
+    - target: {fileID: 114708316729133944, guid: a2791c189ee78b74b9218c535cf5fee4,
+        type: 2}
+      propertyPath: heart1
+      value: 
+      objectReference: {fileID: 1723829281}
+    - target: {fileID: 114708316729133944, guid: a2791c189ee78b74b9218c535cf5fee4,
+        type: 2}
+      propertyPath: heart2
+      value: 
+      objectReference: {fileID: 1652977466}
+    - target: {fileID: 114708316729133944, guid: a2791c189ee78b74b9218c535cf5fee4,
+        type: 2}
+      propertyPath: heart3
+      value: 
+      objectReference: {fileID: 416571990}
+    - target: {fileID: 212245799892597580, guid: a2791c189ee78b74b9218c535cf5fee4,
+        type: 2}
+      propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
