@@ -1,16 +1,50 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BossHealth : MonoBehaviour {
+public class BossHealth : MonoBehaviour
+{
+    public int startingBossHealth = 100;
+    public int currentBossHealth;
+    public Slider bossHealthSlider;
 
-	// Use this for initialization
-	void Start () {
-		
+    public bool bossIsDead = false;
+    public bool bossDamaged;
+
+
+    // Use this for initialization
+    void Start ()
+    {
+        currentBossHealth = currentBossHealth;
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+        bossDamaged = false;
+    }
+
+    public void BossTakeDamage(int amount)
+    {
+        bossDamaged = true;
+
+        currentBossHealth -= amount;
+
+
+        bossHealthSlider.value = currentBossHealth;
+
+        if (currentBossHealth <= 0)
+        {
+            BossDeath();
+        }
+    }
+
+    void BossDeath()
+    {
+
+        bossIsDead = true;
+        
+        //next level
+    }
 }
