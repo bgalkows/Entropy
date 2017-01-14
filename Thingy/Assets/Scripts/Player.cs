@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour {
     public float speed = 2;
     public int lives;
     public int currentHealth;
+    public bool invincible;
 
     HealthBar HealthBar;
 
@@ -128,12 +130,34 @@ public class Player : MonoBehaviour {
         this.transform.position = new Vector2(x, y);
     }
 
-    public void Respawn()
+    //public void Respawn()
+    //{
+    //    invincible = true;
+    //    updateLine(); 
+    //    invincible = false;
+
+    //    currentHealth = 100; 
+    //    HealthBar.healthSlider.value = currentHealth;
+    //    Debug.Log("You respawned with 100 health.");
+    //    setPosition(0, -4);
+    //}
+
+    void Respawn()
     {
+        StartCoroutine("waitThreeSeconds");
+    }
+
+    IEnumerator waitThreeSeconds()
+    {
+
         currentHealth = 100;
         HealthBar.healthSlider.value = currentHealth;
         Debug.Log("You respawned with 100 health.");
-        setPosition(1, 0);
+        setPosition(0, -4);
+
+        invincible = true;
+        yield return new WaitForSeconds(3);
+        invincible = false;
     }
 
 
@@ -160,16 +184,20 @@ public class Player : MonoBehaviour {
 
     public void TakeDamage(int amount)
     {
-        currentHealth -= amount;
-        Debug.Log("Player lost" + amount + "health, " + currentHealth + "remaining.");
-
-        HealthBar.damaged = true; 
-
-        HealthBar.healthSlider.value = currentHealth;
-        if(currentHealth<=0)
+        if(!invincible)
         {
-            Death();
+            currentHealth -= amount;
+            Debug.Log("Player lost" + amount + "health, " + currentHealth + "remaining.");
+
+            HealthBar.damaged = true;
+
+            HealthBar.healthSlider.value = currentHealth;
+            if (currentHealth <= 0)
+            {
+                Death();
+            }
         }
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)
