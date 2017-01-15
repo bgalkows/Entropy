@@ -22,6 +22,7 @@ public class BossHealth : MonoBehaviour
     public PhaseControl PhaseControl;
 
     public int bossLives;
+    public bool once;
 
     // Use this for initialization
     void Start ()
@@ -32,6 +33,7 @@ public class BossHealth : MonoBehaviour
         PhaseControl = GameObject.Find("Boss").GetComponent<PhaseControl>();
 
         renderer = GameObject.Find("Boss").GetComponent<SpriteRenderer>();
+        once = false;
     }
 	
 	// Update is called once per frame
@@ -65,8 +67,16 @@ public class BossHealth : MonoBehaviour
     void BossDeath()
     {
         bossIsDead = true;
+
+        if (!once)
+        {
+            bossLives++;
+            Debug.Log("BossLives" + " " + bossLives);
+            once = true;
+        }
+      
         StartCoroutine("nextLevel");
-        bossLives++;
+        
     }
 
     IEnumerator nextLevel()
