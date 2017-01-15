@@ -37,6 +37,17 @@ public class ExplodingShot : MonoBehaviour {
         countdown = cd;
         exploded = false;
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("BULLET HIT PLAYER");
+            Destroy(gameObject);
+        }
+    }
+
+
     public float getSpd() { return speed; }
     public float getDir() { return direction; }
     public Vector2 getPos() { return pos; }

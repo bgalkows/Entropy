@@ -49,6 +49,16 @@ public class BulletSpawner : MonoBehaviour {
         position = new Vector2(x, y);
         rate = delay;
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Debug.Log("BULLET HIT PLAYER");
+            Destroy(gameObject);
+        }
+    }
+
     //gets
     public float getShotSpeed() { return shotSpeed; }
     public float getXA() { return xAway; }
