@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PhaseControl : MonoBehaviour {
-    private int hp;
+    public int hp;
     private int phases;
     public GameObject boss;
+
+    public int loss;
+
 	// Use this for initialization
-	void Start () {
- 
+	void Start ()
+    {
+        loss = 0;
 	}
 	
 	// Update is called once per frame
@@ -19,6 +23,8 @@ public class PhaseControl : MonoBehaviour {
     public void hit()
     {
         hp -= 1;
+        loss += 1;
+
         if (hp == 0)
         {
             phases-= 1;

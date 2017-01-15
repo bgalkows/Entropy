@@ -12,33 +12,26 @@ public class BossHealth : MonoBehaviour
     public bool bossIsDead = false;
     public bool bossDamaged;
 
+    public PhaseControl PhaseControl;
+
 
     // Use this for initialization
     void Start ()
     {
+        bossHealthSlider.value = startingBossHealth;
         currentBossHealth = startingBossHealth;
-	}
+
+        PhaseControl = GameObject.Find("Boss").GetComponent<PhaseControl>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
         bossDamaged = false;
+
+        bossHealthSlider.value = startingBossHealth - PhaseControl.loss;
     }
 
-    public void BossTakeDamage(int amount)
-    {
-        bossDamaged = true;
-
-        currentBossHealth -= amount;
-
-
-        bossHealthSlider.value = currentBossHealth;
-
-        if (currentBossHealth <= 0)
-        {
-            BossDeath();
-        }
-    }
 
     void BossDeath()
     {

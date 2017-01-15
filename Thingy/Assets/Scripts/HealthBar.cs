@@ -74,9 +74,6 @@ public class HealthBar : MonoBehaviour
 
         healthSlider.value = currentHealth;
 
-        //float ratio = currentHealth / 100;
-        //healthImg.rectTransform.localScale = new Vector3(ratio, 1, 1);
-
         if(currentHealth <= 0 && !isDead)
         {
             Death();
