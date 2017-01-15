@@ -73,6 +73,8 @@ public class BossHealth3 : MonoBehaviour
             Debug.Log("BossLives3" + " " + bossLives);
             once = true;
         }
+
+        StartCoroutine("nextLevel");
     }
 
     IEnumerator nextLevel()
