@@ -10,6 +10,8 @@ public class Spiral : MonoBehaviour {
     private Vector2 pos;
     // Use this for initialization
     void Start () {
+        xDiff = 0;
+        yDiff = 0;
 	}
 	// Update is called once per frame
 	void Update () {
@@ -30,6 +32,19 @@ public class Spiral : MonoBehaviour {
                 deg -= spiralDegIncrement;
             }
         }
+    }
+    public void incrementDegS()
+    {
+            if (cw)
+            {
+                if (deg >= 360) { deg = 0; }
+                deg += spiralDegIncrement;
+            }
+            else
+            {
+                if (deg <= 0) { deg = 360; }
+                deg -= spiralDegIncrement;
+            }
     }
     //spiral methods - sets
     public void swapSpiralDir() { cw = !cw; }

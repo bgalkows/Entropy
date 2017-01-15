@@ -360,9 +360,153 @@ Prefab:
       value: 
       objectReference: {fileID: 21300000, guid: 3f96484e4ce4b98419374b5a9afe5466,
         type: 3}
+    - target: {fileID: 82695777746471126, guid: 31cc2161b51233b47b2380aead212a4d,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: a3a3c3430af1eb6439795a7a6679f4f2, type: 3}
+    - target: {fileID: 82695777746471126, guid: 31cc2161b51233b47b2380aead212a4d,
+        type: 2}
+      propertyPath: BypassEffects
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 31cc2161b51233b47b2380aead212a4d, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &1124099346
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179171676415020, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_Name
+      value: SpirSat (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 212812645659799856, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.6946851
+      objectReference: {fileID: 0}
+    - target: {fileID: 212812645659799856, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.24032223
+      objectReference: {fileID: 0}
+    - target: {fileID: 212812645659799856, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.9338235
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114790392814188936, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &1124099347 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179171676415020, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+    type: 2}
+  m_PrefabInternal: {fileID: 1124099346}
+--- !u!1001 &1389898609
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179171676415020, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_Name
+      value: SpirSat
+      objectReference: {fileID: 0}
+    - target: {fileID: 212812645659799856, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 0.6946851
+      objectReference: {fileID: 0}
+    - target: {fileID: 212812645659799856, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 0.24032223
+      objectReference: {fileID: 0}
+    - target: {fileID: 212812645659799856, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 0.9338235
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 114790392814188936, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+  m_ParentPrefab: {fileID: 100100000, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1 &1389898610 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179171676415020, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+    type: 2}
+  m_PrefabInternal: {fileID: 1389898609}
 --- !u!1001 &1653453261
 Prefab:
   m_ObjectHideFlags: 0
@@ -435,6 +579,8 @@ MonoBehaviour:
   playerBullet: {fileID: 1021326584077002, guid: 664df0d8165007b4f92845274a8b02fd,
     type: 2}
   rShot: {fileID: 1986083154071376, guid: 3ea22c073e6481d40840acccf96a2308, type: 2}
+  spirSat: {fileID: 1389898610}
+  spirSatL: {fileID: 1124099347}
 --- !u!1 &2001642859
 GameObject:
   m_ObjectHideFlags: 0

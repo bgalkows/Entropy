@@ -7,14 +7,14 @@ public class StageThree: MonoBehaviour
     //Boss script will change variables on this based on health loss
 
     //Boss related
-    public GameObject shot, bulletSpawner, boss, player, exploder, playerBullet, rShot;
-    private bool isAimed, aimedShots, firing;
+    public GameObject shot, bulletSpawner, boss, player, exploder, playerBullet, rShot, spirSat, spirSatL;
+    private bool isAimed, aimedShots, firing, spawnerSpawnerStream, ascending;
     private int count, start; //start is startPhase value
     private float speed, direction, xAwayFromTarget, yAwayFromTarget, xSizeDiff, ySizeDiff;
     private Vector2 position;
-    private int refractOffset; //30 degrees for a 60 degree cone
+    private int refractOffset, maxDeg, minDeg, inc;
     //lists of bullets
-    private List<GameObject> spBullets, aimBullets, explosives, spirals, spreads, spawnerSpawners, explosiveSpawners, explosionBullets, playerBullets, refracted;
+    private List<GameObject> spBullets, aimBullets, explosives, spirals, spreads, spawnerSpawners, explosiveSpawners, explosionBullets, playerBullets, refracted, ringStream, spirSatBullets, spirSatLBullets;
     private GameObject[] refractellites;
     //refracted bullets are just normal bullets with a different tag
     //the SizeDiffs are for in case we want to adjust the position the bullets spawn from on the object
@@ -23,21 +23,25 @@ public class StageThree: MonoBehaviour
     {
         start = 4;
         boss.GetComponent<PhaseControl>().setPhase(start); //Phase tbd when patterns are done
+        spirSat.AddComponent<Spiral>();
+        spirSatL.AddComponent<Spiral>();
         spBullets = new List<GameObject>();
         aimBullets = new List<GameObject>();
         explosionBullets = new List<GameObject>();
+        ringStream = new List<GameObject>();
+        spirSatBullets = new List<GameObject>();
+        spirSatLBullets = new List<GameObject>();
         refractellites = GameObject.FindGameObjectsWithTag("Refractor");
-        for (int i = 0; i < refractellites.Length; i++)
-        {
-            refractellites[i].GetComponent<Refractellite>().setPos(new Vector2(20, 20));
-        }
         refracted = new List<GameObject>();
         refractOffset = 30;
+        ascending = true;
         count = 0;
         xSizeDiff = 0;
         ySizeDiff = 0;
+        inc = 0;
         speed = 0;
         direction = 0;
+        spawnerSpawnerStream = true;
         playerBullets = new List<GameObject>();
         spirals = new List<GameObject>();
         spreads = new List<GameObject>();
@@ -65,16 +69,32 @@ public class StageThree: MonoBehaviour
         //addSpiral(89, 5, .07f, 8, false, -5, 2.5f, true);
         //addSpiral(91, 5, .07f, -8, false, 5, 2.5f, true);
         //addSpread(160, 20, .1f, 8, true, 0, 0, true, false);
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 2; i++)
         {
-            addSpiral(safeRandomValue()*360,(int)(safeRandomValue()*10), safeRandomValue()/ 100,(int)(safeRandomValue() * 3),true,0,0,false);
+            addSpiral(safeRandomValue()*360,(int)(safeRandomValue()*15)+1, safeRandomValue()/ 100,(int)(safeRandomValue() * 3),true,0,0,false);
         }
+        spirSat.GetComponent<Spiral>().setDeg(110);
+        spirSat.GetComponent<Spiral>().setSpiralSpawnDelay(1);
+        spirSat.GetComponent<Spiral>().setSpiralShotSpeed(.05f);
+        spirSat.GetComponent<Spiral>().setSpiralDegInc(6);
+        spirSat.GetComponent<Spiral>().setSpawnOnBoss(false);
+        spirSat.GetComponent<Spiral>().setBounce(false);
+        maxDeg = 260;
+        spirSatL.GetComponent<Spiral>().setDeg(290);
+        spirSatL.GetComponent<Spiral>().setSpiralSpawnDelay(2);
+        spirSatL.GetComponent<Spiral>().setSpiralShotSpeed(.04f);
+        spirSatL.GetComponent<Spiral>().setSpiralDegInc(7);
+        spirSatL.GetComponent<Spiral>().setSpawnOnBoss(false);
+        spirSatL.GetComponent<Spiral>().setBounce(false);
+        minDeg =440; //bottom for spirSatL
+        addSpawnerSpawner(8, 90, .01f,true, 0, 0);
+
     }
 
     public float safeRandomValue()
     {
         float attemptedRand = Random.value;
-        if(attemptedRand == 0)
+        if(attemptedRand <= 0.000001)
         {
             return attemptedRand + 0.01f;
         }
@@ -141,40 +161,24 @@ public class StageThree: MonoBehaviour
                     if (b.GetComponent<Bullet>().getBounce() && tmpX > 12 || tmpX < -12) { b.GetComponent<Bullet>().bounce(); b.GetComponent<Bullet>().setBounce(false); }
                 }
             }
+            for (int i = ringStream.Count- 1; i >= 0; i--)
+            {
+                GameObject b = ringStream[i];
+                if (b == null) { ringStream.Remove(b); }
+                else
+                {   
+                    float tmpX = b.GetComponent<Bullet>().getPos().x;
+                    float tmpY = b.GetComponent<Bullet>().getPos().y;
+                    if (!b.GetComponent<Bullet>().getBounce() && ((tmpX > 12) || (tmpX < -12)) || (tmpY > 5) || (tmpY < -5)) { Destroy(b); }
+                    if (b.GetComponent<Bullet>().getBounce() && tmpX > 12 || tmpX < -12) { b.GetComponent<Bullet>().bounce(); b.GetComponent<Bullet>().setBounce(false); }
+                }
+            }
             //if (boss.GetComponent<PhaseControl>().getPhase() <= start - 1)
             //{
-            //    for (int i = aimBullets.Count - 1; i >= 0; i--)
-            //    {
-            //        GameObject b = aimBullets[i];
-            //        if (b == null) { aimBullets.Remove(b); }
-            //        else
-            //        {
-            //            float tmpX = b.GetComponent<Bullet>().getPos().x;
-            //            float tmpY = b.GetComponent<Bullet>().getPos().y;
-            //            bool hB = b.GetComponent<Bullet>().getBounce();
-            //            bool vB = b.GetComponent<Bullet>().getVBounce();
-            //            if ((!hB && (tmpX > 12 || tmpX < -12)) || (!vB && (tmpY > 5 || tmpY < -5))) { Destroy(b); }
-            //            if (hB && (tmpX > 12 || tmpX < -12))
-            //            { b.GetComponent<Bullet>().bounce(); }
-            //            if (vB && (tmpY > 5 || tmpY < -5)) { b.GetComponent<Bullet>().vertBounce(); }
-            //        }
-            //    }
+
             //    for (int i = 0; i < spreads.Count; i++)
             //    {
-            //        if (spreads[i].GetComponent<AimedSpread>().getSpawnOnBoss())
-            //        { spreads[i].GetComponent<AimedSpread>().setPos(position); }
-            //        if (count % spreads[i].GetComponent<AimedSpread>().getSpawnDelay() == 0)
-            //        {
-            //            float xAway = player.transform.position.x - position.x;
-            //            float yAway = player.transform.position.y - position.y;
-            //            for (int b = 0; b < spreads[i].GetComponent<AimedSpread>().getNumber(); b++)
-            //            {
-            //                aimBullets.Add(Instantiate(shot));
-            //                if (spreads[i].GetComponent<AimedSpread>().getNumber() > 1) { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber() - 1, spreads[i].GetComponent<AimedSpread>().getSpread(), true, true); }
-            //                else { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber(), spreads[i].GetComponent<AimedSpread>().getSpread(), true, true); }
-            //                aimBullets[aimBullets.Count - 1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.red);
-            //            }
-            //        }
+
             //    }
             //}
             //for (int i = explosives.Count - 1; i >= 0; i--)
@@ -242,70 +246,148 @@ public class StageThree: MonoBehaviour
                     }
                 }
             }
+            if (boss.GetComponent<PhaseControl>().getPhase() <= start - 1)
+            {
+                if (ascending)
+                {
+                    spirSat.transform.position = new Vector2(spirSat.transform.position.x, spirSat.transform.position.y + Random.value / 50);
+                    spirSatL.transform.position = new Vector2(spirSatL.transform.position.x, spirSatL.transform.position.y + Random.value / 50);
+                }
+                else
+                {
+                    spirSat.transform.position = new Vector2(spirSat.transform.position.x, spirSat.transform.position.y - Random.value / 50);
+                    spirSatL.transform.position = new Vector2(spirSatL.transform.position.x, spirSatL.transform.position.y - Random.value / 50);
+                }
+                if (spirSat.transform.position.y > 4 && spirSatL.transform.position.y > 4)
+                { ascending = false; }
+                if (spirSat.transform.position.y < -4 && spirSatL.transform.position.y < -4)
+                { ascending = true; }
+                spirSat.GetComponent<Spiral>().setSpiralPos(spirSat.transform.position);
+                spirSatL.GetComponent<Spiral>().setSpiralPos(spirSatL.transform.position);
+                for (int i = spirSatBullets.Count-1;i>=0;i--)
+                {
+                    GameObject b = spirSatBullets[i];
+                    if (b == null) { spirSatBullets.Remove(b); }
+                    else
+                    {
+                        float tmpX = b.GetComponent<Bullet>().getPos().x;
+                        float tmpY = b.GetComponent<Bullet>().getPos().y;
+                        if (!b.GetComponent<Bullet>().getBounce() && ((tmpX > 12) || (tmpX < -12)) || (tmpY > 5) || (tmpY < -5)) { Destroy(b); }
+                        if (b.GetComponent<Bullet>().getBounce() && tmpX > 12 || tmpX < -12) { b.GetComponent<Bullet>().bounce(); b.GetComponent<Bullet>().setBounce(false); }
+                    }
+                }
+                    if (count % 1 == 0)
+                {
+                    if (spirSat.GetComponent<Spiral>().getDeg() > maxDeg || spirSat.GetComponent<Spiral>().getDeg() < 100)
+                    { spirSat.GetComponent<Spiral>().swapSpiralDir(); }
+                    spirSat.GetComponent<Spiral>().incrementDegS();
+                    spirSatBullets.Add(Instantiate(shot));
+                        spirSatBullets[spirSatBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirSat.GetComponent<Spiral>().getSpiralPos().x + spirSat.GetComponent<Spiral>().getXDiff(), spirSat.GetComponent<Spiral>().getSpiralPos().y + spirSat.GetComponent<Spiral>().getYDiff(), spirSat.GetComponent<Spiral>().getSpiralShotSpeed(), spirSat.GetComponent<Spiral>().getDeg(), spirSat.GetComponent<Spiral>().getBounce());
+                }
+                for (int i = spirSatLBullets.Count - 1; i >= 0; i--)
+                {
+                    GameObject b = spirSatLBullets[i];
+                    if (b == null) { spirSatLBullets.Remove(b); }
+                    else
+                    {
+                        float tmpX = b.GetComponent<Bullet>().getPos().x;
+                        float tmpY = b.GetComponent<Bullet>().getPos().y;
+                        if (!b.GetComponent<Bullet>().getBounce() && ((tmpX > 12) || (tmpX < -12)) || (tmpY > 5) || (tmpY < -5)) { Destroy(b); }
+                        if (b.GetComponent<Bullet>().getBounce() && tmpX > 12 || tmpX < -12) { b.GetComponent<Bullet>().bounce(); b.GetComponent<Bullet>().setBounce(false); }
+                    }
+                }
+                if (count % 2 == 0)
+                {
+                    if (spirSatL.GetComponent<Spiral>().getDeg() < 300)
+                    { spirSatL.GetComponent<Spiral>().setSpiralDegInc(10); }
+                    if (spirSatL.GetComponent<Spiral>().getDeg() > 440)
+                    { spirSatL.GetComponent<Spiral>().setSpiralDegInc(-10); }
+                    spirSatL.GetComponent<Spiral>().incrementDegS();
+                    spirSatLBullets.Add(Instantiate(shot));
+                    spirSatLBullets[spirSatLBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirSatL.GetComponent<Spiral>().getSpiralPos().x + spirSatL.GetComponent<Spiral>().getXDiff(), spirSatL.GetComponent<Spiral>().getSpiralPos().y + spirSatL.GetComponent<Spiral>().getYDiff(), spirSatL.GetComponent<Spiral>().getSpiralShotSpeed(), spirSatL.GetComponent<Spiral>().getDeg(), spirSatL.GetComponent<Spiral>().getBounce());
+                }
+            }
+            if (boss.GetComponent<PhaseControl>().getPhase() <= start - 2)
+            {
+                for (int i = 0; i < spawnerSpawners.Count; i++)
+                {
+                    spawnerSpawners[i].GetComponent<Ring>().setPos(position);
+                    int interval = count % spawnerSpawners[i].GetComponent<Ring>().getSpawnDelay();
+                    if (interval <= 100 && interval % 20== 0)
+                    {
+                        for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
+                        {
+                            ringStream.Add(Instantiate(shot));
+                            ringStream[ringStream.Count - 1].GetComponent<Bullet>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed() + (5 - interval) * .004f, 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()) + 22.5f+inc*((int)(Random.value)*10), false);
+                            inc += 1;
+                        }
+                    }
+                }
+            }
             //if (boss.GetComponent<PhaseControl>().getPhase() <= start - 2)
             //{
-               // for (int i = 0; i < refractellites.Length; i++)
-               // {
-                  //  refractellites[i].GetComponent<Refractellite>().update();
-                  //  if (!refractellites[i].GetComponent<Refractellite>().isMoving())
-                   // {
-                  //      refractellites[i].GetComponent<Refractellite>().startL(.8f);
-                  //  }
-                  //  for (int b = 0; b < refractellites[i].GetComponent<Refractellite>().getFired().Count; b++)
-                  //  {
-                  //      if (!refractellites[i].GetComponent<Refractellite>().getFired()[b])
-                  //      {
-                   //         for (int c = 0; c < 2; c++)
-                   //         {
-                   //             Bullet refractor = refractellites[i].GetComponent<Refractellite>().getRefract()[b];
-                  //              refracted.Add(Instantiate(rShot));
-                 //               refracted[refracted.Count - 1].gameObject.tag = "Refracted";
-                 //               refracted[refracted.Count - 1].GetComponent<Bullet>().SpawnDirectional(refractellites[i].GetComponent<Refractellite>().getPos().x, refractellites[i].GetComponent<Refractellite>().getPos().y, .03f, refractellites[i].GetComponent<Refractellite>().getAngle() / 2 + c * 30, true);
-                //            }
-                //            refractellites[i].GetComponent<Refractellite>().fire(b);
-                 //       }
+            // for (int i = 0; i < refractellites.Length; i++)
+            // {
+            //  refractellites[i].GetComponent<Refractellite>().update();
+            //  if (!refractellites[i].GetComponent<Refractellite>().isMoving())
+            // {
+            //      refractellites[i].GetComponent<Refractellite>().startL(.8f);
+            //  }
+            //  for (int b = 0; b < refractellites[i].GetComponent<Refractellite>().getFired().Count; b++)
+            //  {
+            //      if (!refractellites[i].GetComponent<Refractellite>().getFired()[b])
+            //      {
+            //         for (int c = 0; c < 2; c++)
+            //         {
+            //             Bullet refractor = refractellites[i].GetComponent<Refractellite>().getRefract()[b];
+            //              refracted.Add(Instantiate(rShot));
+            //               refracted[refracted.Count - 1].gameObject.tag = "Refracted";
+            //               refracted[refracted.Count - 1].GetComponent<Bullet>().SpawnDirectional(refractellites[i].GetComponent<Refractellite>().getPos().x, refractellites[i].GetComponent<Refractellite>().getPos().y, .03f, refractellites[i].GetComponent<Refractellite>().getAngle() / 2 + c * 30, true);
+            //            }
+            //            refractellites[i].GetComponent<Refractellite>().fire(b);
+            //       }
 
-               //     }
-               // }
-        //        for (int i = refracted.Count - 1; i >= 0; i--)
-        //        {
-        //            GameObject b = refracted[i];
-        //            if (b == null) { refracted.Remove(b); }
-        //            else
-        //            {
-        //                float tmpX = b.GetComponent<Bullet>().getPos().x;
-        //                float tmpY = b.GetComponent<Bullet>().getPos().y;
-        //                bool hB = b.GetComponent<Bullet>().getBounce();
-        //                bool vB = b.GetComponent<Bullet>().getVBounce();
-        //                if ((!hB && (tmpX > 12 || tmpX < -12)) || (!vB && (tmpY > 5 || tmpY < -5))) { Destroy(b); }
-        //                if (hB && (tmpX > 12 || tmpX < -12))
-        //                { b.GetComponent<Bullet>().bounce(); }
-        //                if (vB && (tmpY > 5 || tmpY < -5)) { b.GetComponent<Bullet>().vertBounce(); }
-        //            }
-        //        }
-        //    }
-        //    for (int i = 0; i < spawnerSpawners.Count; i++)
-        //    {
-        //        spawnerSpawners[i].GetComponent<Ring>().setPos(position);
-        //        if (count % spawnerSpawners[i].GetComponent<Ring>().getSpawnDelay() == 0)
-        //        {
-        //            for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
-        //            {
-        //                explosiveSpawners.Add(Instantiate(bulletSpawner));
-        //                explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()), 50, .15f, 5, false, (360 / (spawnerSpawners[i].GetComponent<Ring>().getNumber())) / 2);
-        //            }
-        //        }
-        //    }
-        //    for (int i = 0; i < explosiveSpawners.Count; i++)
-        //    {
-        //        if (count % explosiveSpawners[i].GetComponent<BulletSpawner>().getDelay() == 0 && !(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y < -3))
-        //        {
-        //            for (int b = 0; b < explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(); b++)
-        //            {
-        //                explosives.Add(Instantiate(exploder));
-        //                explosives[explosives.Count - 1].GetComponent<ExplodingShot>().SpawnDirectional(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().x, explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y, explosiveSpawners[i].GetComponent<BulletSpawner>().getShotSpd(), 360 * b / explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(), false, 3, .03f, 400);
-        //            }
-                //}
+            //     }
+            // }
+            //        for (int i = refracted.Count - 1; i >= 0; i--)
+            //        {
+            //            GameObject b = refracted[i];
+            //            if (b == null) { refracted.Remove(b); }
+            //            else
+            //            {
+            //                float tmpX = b.GetComponent<Bullet>().getPos().x;
+            //                float tmpY = b.GetComponent<Bullet>().getPos().y;
+            //                bool hB = b.GetComponent<Bullet>().getBounce();
+            //                bool vB = b.GetComponent<Bullet>().getVBounce();
+            //                if ((!hB && (tmpX > 12 || tmpX < -12)) || (!vB && (tmpY > 5 || tmpY < -5))) { Destroy(b); }
+            //                if (hB && (tmpX > 12 || tmpX < -12))
+            //                { b.GetComponent<Bullet>().bounce(); }
+            //                if (vB && (tmpY > 5 || tmpY < -5)) { b.GetComponent<Bullet>().vertBounce(); }
+            //            }
+            //        }
+            //    }
+            //    for (int i = 0; i < spawnerSpawners.Count; i++)
+            //    {
+            //        spawnerSpawners[i].GetComponent<Ring>().setPos(position);
+            //        if (count % spawnerSpawners[i].GetComponent<Ring>().getSpawnDelay() == 0)
+            //        {
+            //            for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
+            //            {
+            //                explosiveSpawners.Add(Instantiate(bulletSpawner));
+            //                explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()), 50, .15f, 5, false, (360 / (spawnerSpawners[i].GetComponent<Ring>().getNumber())) / 2);
+            //            }
+            //        }
+            //    }
+            //    for (int i = 0; i < explosiveSpawners.Count; i++)
+            //    {
+            //        if (count % explosiveSpawners[i].GetComponent<BulletSpawner>().getDelay() == 0 && !(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y < -3))
+            //        {
+            //            for (int b = 0; b < explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(); b++)
+            //            {
+            //                explosives.Add(Instantiate(exploder));
+            //                explosives[explosives.Count - 1].GetComponent<ExplodingShot>().SpawnDirectional(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().x, explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y, explosiveSpawners[i].GetComponent<BulletSpawner>().getShotSpd(), 360 * b / explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(), false, 3, .03f, 400);
+            //            }
+            //}
             //}
         }
     }
