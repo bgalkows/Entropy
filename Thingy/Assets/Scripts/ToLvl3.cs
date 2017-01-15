@@ -22,6 +22,6 @@ public class ToLvl3 : MonoBehaviour
     IEnumerator waitThreeSeconds()
     {
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("Level Three");
+        SceneManager.LoadScene("ThirdScript");
     }
 }

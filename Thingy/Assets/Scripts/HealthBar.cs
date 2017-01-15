@@ -43,12 +43,7 @@ public class HealthBar : MonoBehaviour
 
         damaged = false;
 
-        if (livesLeft == 3)
-        {
-
-        }
-
-        else if (livesLeft == 2)
+        if (livesLeft == 2)
         {
             heart3.color = new Color(0, 0, 0, 0);
         }
