@@ -230,7 +230,7 @@ public class SecondPattern : MonoBehaviour
                     refractellites[i].GetComponent<Refractellite>().update();
                     if (!refractellites[i].GetComponent<Refractellite>().isMoving())
                     {
-                        refractellites[i].GetComponent<Refractellite>().startL(1.5f);
+                        refractellites[i].GetComponent<Refractellite>().startL(.8f);
                     }
                     for (int b = 0; b < refractellites[i].GetComponent<Refractellite>().getFired().Count; b++)
                     {

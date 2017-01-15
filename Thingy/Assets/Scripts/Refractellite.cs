@@ -9,7 +9,7 @@ public class Refractellite : MonoBehaviour {
     private bool linear; //either linear or sin
     private bool flipped, moving, increasing;
     private float lBound, rBound, speed, bSpeed;
-    private int angle, increment;
+    private int angle, increment, sine, sinInc;
     private Vector2 position;
     // Use this for initialization
     void Start() {
@@ -23,6 +23,8 @@ public class Refractellite : MonoBehaviour {
         moving = false;
         angle = 60;
         increment = 5;
+        sine = 0;
+        sinInc = 5;
         position = new Vector2(20, 20);
     }
 
@@ -43,6 +45,9 @@ public class Refractellite : MonoBehaviour {
         if (increasing)
         { angle += increment; }
         else { angle -= increment; }
+        sine += sinInc;
+        if (sine == 360)
+        { sine = 0; }
         for (int i = hasFired.Count - 1; i >= 0; i--)
         {
             if (hasFired[i])
@@ -57,7 +62,7 @@ public class Refractellite : MonoBehaviour {
             {
                 if (linear)
                 {
-                    position = new Vector2(position.x + (speed * Mathf.Cos(0)), position.y);
+                    position = new Vector2(position.x + (speed * Mathf.Cos(0)), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(speed, Mathf.Sin(Mathf.Deg2Rad * sine))) - 90))));
                 }
                 if (position.x > rBound)
                 { flipped = !flipped; }
@@ -66,7 +71,7 @@ public class Refractellite : MonoBehaviour {
             {
                 if (linear)
                 {
-                    position = new Vector2(position.x - (speed * Mathf.Cos(0)), position.y);
+                    position = new Vector2(position.x - (speed * Mathf.Cos(0)), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(speed, Mathf.Sin(Mathf.Deg2Rad * sine))) - 90))));
                 }
                 if (position.x < lBound)
                 { flipped = !flipped; }
