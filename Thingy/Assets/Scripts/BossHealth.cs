@@ -12,6 +12,10 @@ public class BossHealth : MonoBehaviour
     public bool bossIsDead = false;
     public bool bossDamaged;
 
+    public Image firstTick;
+    public Image secondTick;
+    public Image thirdTick;
+
     public PhaseControl PhaseControl;
 
 
@@ -30,6 +34,21 @@ public class BossHealth : MonoBehaviour
         bossDamaged = false;
 
         bossHealthSlider.value = startingBossHealth - PhaseControl.loss;
+
+        if (bossHealthSlider.value <= 270)
+        {
+            firstTick.color = new Color(0, 0, 0, 0);
+        }
+
+        if (bossHealthSlider.value <= 190)
+        {
+            secondTick.color = new Color(0, 0, 0, 0);
+        }
+
+        if (bossHealthSlider.value <= 100)
+        {
+            thirdTick.color = new Color(0, 0, 0, 0);
+        }
     }
 
 
