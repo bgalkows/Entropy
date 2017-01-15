@@ -433,7 +433,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4040507159109952, guid: 31cc2161b51233b47b2380aead212a4d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0.39
+      value: -0.06
       objectReference: {fileID: 0}
     - target: {fileID: 4040507159109952, guid: 31cc2161b51233b47b2380aead212a4d, type: 2}
       propertyPath: m_LocalPosition.y
@@ -471,7 +471,7 @@ Prefab:
         type: 3}
     - target: {fileID: 4040507159109952, guid: 31cc2161b51233b47b2380aead212a4d, type: 2}
       propertyPath: m_LocalScale.x
-      value: 1.9114711
+      value: 2.1888058
       objectReference: {fileID: 0}
     - target: {fileID: 4040507159109952, guid: 31cc2161b51233b47b2380aead212a4d, type: 2}
       propertyPath: m_LocalScale.y
@@ -1056,106 +1056,67 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+    - target: {fileID: 4465238167547254, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+    - target: {fileID: 4465238167547254, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
       propertyPath: m_LocalPosition.y
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+    - target: {fileID: 4465238167547254, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+    - target: {fileID: 4465238167547254, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+    - target: {fileID: 4465238167547254, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+    - target: {fileID: 4465238167547254, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+    - target: {fileID: 4465238167547254, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+    - target: {fileID: 4465238167547254, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114405616139947132, guid: 25ca62d4c8146d746a3b7291f047a701,
+    - target: {fileID: 1947893832040794, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
+      propertyPath: m_Name
+      value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 114670845515953850, guid: fb4461d8da3b3f74fa87c76f81f1ac6e,
         type: 2}
       propertyPath: player
       value: 
       objectReference: {fileID: 208253087}
-    - target: {fileID: 114365410385963580, guid: 25ca62d4c8146d746a3b7291f047a701,
+    - target: {fileID: 114798033831872252, guid: fb4461d8da3b3f74fa87c76f81f1ac6e,
         type: 2}
-      propertyPath: boss
+      propertyPath: bossHealthSlider
       value: 
-      objectReference: {fileID: 2050962439}
-    - target: {fileID: 1363381030871702, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
-      propertyPath: m_Name
-      value: Boss
-      objectReference: {fileID: 0}
-    - target: {fileID: 212071201384714738, guid: 25ca62d4c8146d746a3b7291f047a701,
+      objectReference: {fileID: 1595221937}
+    - target: {fileID: 114798033831872252, guid: fb4461d8da3b3f74fa87c76f81f1ac6e,
         type: 2}
-      propertyPath: m_SortingLayerID
-      value: 1261429323
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114405616139947132, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
-    - {fileID: 114081316244828020, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
-  m_ParentPrefab: {fileID: 100100000, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+      propertyPath: firstTick
+      value: 
+      objectReference: {fileID: 1052166798}
+    - target: {fileID: 114798033831872252, guid: fb4461d8da3b3f74fa87c76f81f1ac6e,
+        type: 2}
+      propertyPath: secondTick
+      value: 
+      objectReference: {fileID: 1509899740}
+    - target: {fileID: 114798033831872252, guid: fb4461d8da3b3f74fa87c76f81f1ac6e,
+        type: 2}
+      propertyPath: thirdTick
+      value: 
+      objectReference: {fileID: 1532505761}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: fb4461d8da3b3f74fa87c76f81f1ac6e, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &2050962439 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1363381030871702, guid: 25ca62d4c8146d746a3b7291f047a701,
-    type: 2}
-  m_PrefabInternal: {fileID: 2050962438}
---- !u!114 &2050962440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2050962439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bc3643abf7b24e43a23b2a0b356467b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shot: {fileID: 1636645848115024, guid: 6543efd923deec14ca770d83aef804d8, type: 2}
-  bulletSpawner: {fileID: 1742249596859834, guid: 38b2ce8ccf47f1442bf300c718c4a83f,
-    type: 2}
-  boss: {fileID: 2050962439}
-  player: {fileID: 208253087}
-  exploder: {fileID: 1567768529453142, guid: f93d688037988f2498acfc69c82780e2, type: 2}
-  playerBullet: {fileID: 1021326584077002, guid: 664df0d8165007b4f92845274a8b02fd,
-    type: 2}
-  rShot: {fileID: 1986083154071376, guid: 3ea22c073e6481d40840acccf96a2308, type: 2}
---- !u!114 &2050962441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2050962439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63d5d4bf0211aa644ba490a4457e5d88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingBossHealth: 340
-  currentBossHealth: 0
-  bossHealthSlider: {fileID: 1595221937}
-  bossIsDead: 0
-  bossDamaged: 0
-  firstTick: {fileID: 1052166798}
-  secondTick: {fileID: 1509899740}
-  thirdTick: {fileID: 1532505761}
-  renderer: {fileID: 0}
-  PhaseControl: {fileID: 0}
-  bossLives: 0
