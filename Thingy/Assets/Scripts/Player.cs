@@ -13,6 +13,7 @@ public class Player : MonoBehaviour {
     public Collider2D collide;
     HealthBar HealthBar;
     public SpriteRenderer renderer;
+    public Score score;
     //Get the renderer via GetComponent or have it cached previously
                                                                                                            // Use this for initialization
     void Awake()
@@ -33,6 +34,7 @@ public class Player : MonoBehaviour {
         
         collide = this.GetComponent<Collider2D>();
         renderer = GameObject.Find("Player").GetComponent<SpriteRenderer>();
+        score = GameObject.Find("Player").GetComponent<Score>();
     }
 
     // Update is called once per frame
@@ -212,6 +214,7 @@ public class Player : MonoBehaviour {
     public void GameOver()
     {
         Debug.Log("GAME OVER");
+       //score
         SceneManager.LoadScene("GameOver");
     }
 
