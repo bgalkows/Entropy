@@ -34,18 +34,19 @@ public class SecondPattern : MonoBehaviour
         spawnerSpawners = new List<GameObject>();
         explosiveSpawners = new List<GameObject>();
         explosives = new List<GameObject>();
-        for (int i = 0; i < 3; i++)
-        {
-            addSpiral(i * 120, 5 + i, .05f, 20 - i * 2, true,0,0);
-            if (i % 2 == 0)
-            {
-                spirals[i].GetComponent<Spiral>().swapSpiralDir();
-            }
-        }
+        ////The things I put for the first pattern:
+        //for (int i = 0; i < 3; i++)
+        //{
+        //    addSpiral(i * 120, 5 + i, .05f, 20 - i * 2, true,0,0);
+        //    if (i % 2 == 0)
+        //    {
+        //        spirals[i].GetComponent<Spiral>().swapSpiralDir();
+        //    }
+        //}
         //Have these come in as the boss loses health in the actual
-        addSpread(90, 10, .3f, 4, true,0,0);
-        addSpread(150, 20, .08f, 5, true,0,0);
-        addSpawnerSpawner(8, 100, .1f, true,0,0);
+        //addSpread(90, 10, .3f, 4, true,0,0);
+        //addSpread(150, 20, .08f, 5, true,0,0);
+        //addSpawnerSpawner(8, 100, .1f, true,0,0);
     }
 
     // Update is called once per frame
@@ -73,7 +74,7 @@ public class SecondPattern : MonoBehaviour
             {
                 float tmpX = b.GetComponent<Bullet>().getPos().x;
                 float tmpY = b.GetComponent<Bullet>().getPos().y;
-                if ((tmpX > 10) || (tmpX < -10) || (tmpY > 10) || (tmpY < -10)) { Destroy(b); }
+                if ((tmpX > 12) || (tmpX < -12) || (tmpY > 12) || (tmpY < -12)) { Destroy(b); }
             }
         }
         for (int i = aimBullets.Count - 1; i >= 0; i--)
@@ -84,7 +85,7 @@ public class SecondPattern : MonoBehaviour
             {
                 float tmpX = b.GetComponent<Bullet>().getPos().x;
                 float tmpY = b.GetComponent<Bullet>().getPos().y;
-                if (tmpX > 10 || tmpX < -10 || tmpY > 10 || tmpY < -10) { Destroy(b); }
+                if (tmpX > 12 || tmpX < -12 || tmpY > 12 || tmpY < -12) { Destroy(b); }
             }
         }
         for (int i = explosives.Count - 1; i >= 0; i--)
@@ -97,7 +98,7 @@ public class SecondPattern : MonoBehaviour
                 for (int c = 0; c < b.GetComponent<ExplodingShot>().getNum(); c++)
                 {
                     explosionBullets.Add(Instantiate(shot));
-                    explosionBullets[explosionBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(b.transform.position.x, b.transform.position.y, b.GetComponent<ExplodingShot>().getShotSpd(), c * 360 / b.GetComponent<ExplodingShot>().getNum());
+                    explosionBullets[explosionBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(b.transform.position.x, b.transform.position.y, b.GetComponent<ExplodingShot>().getShotSpd(), c * 360 / b.GetComponent<ExplodingShot>().getNum(),false);
                 }
                 b.GetComponent<ExplodingShot>().explosion();
                 Destroy(b);
@@ -107,7 +108,7 @@ public class SecondPattern : MonoBehaviour
             {
                 float tmpX = b.GetComponent<ExplodingShot>().getPos().x;
                 float tmpY = b.GetComponent<ExplodingShot>().getPos().y;
-                if (tmpX > 20 || tmpX < -20 || tmpY > 20 || tmpY < -20) { Destroy(b); }
+                if (tmpX > 12 || tmpX < -12 || tmpY > 12 || tmpY < -12) { Destroy(b); }
             }
         }
         for (int i = explosionBullets.Count - 1; i >= 0; i--)
@@ -118,7 +119,7 @@ public class SecondPattern : MonoBehaviour
             {
                 float tmpX = b.GetComponent<Bullet>().getPos().x;
                 float tmpY = b.GetComponent<Bullet>().getPos().y;
-                if (tmpX > 10 || tmpX < -10 || tmpY > 10 || tmpY < -10) { Destroy(b); }
+                if (tmpX > 12 || tmpX < -12 || tmpY > 12 || tmpY < -12) { Destroy(b); }
             }
         }
         for (int i = explosiveSpawners.Count - 1; i >= 0; i--)
@@ -129,7 +130,7 @@ public class SecondPattern : MonoBehaviour
             {
                 float tmpX = b.GetComponent<BulletSpawner>().getPosition().x;
                 float tmpY = b.GetComponent<BulletSpawner>().getPosition().y;
-                if (tmpX > 10 || tmpX < -10 || tmpY > 10 || tmpY < -10) { Destroy(b); }
+                if (tmpX > 12 || tmpX < -12 || tmpY > 12 || tmpY < -12) { Destroy(b); }
             }
         }
         //Spiral spawner movement
@@ -140,7 +141,7 @@ public class SecondPattern : MonoBehaviour
             if (count % spirals[i].GetComponent<Spiral>().getSpiralSpawnDelay() == 0)
             {
                 spBullets.Add(Instantiate(shot));
-                spBullets[spBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirals[i].GetComponent<Spiral>().getSpiralPos().x + spirals[i].GetComponent<Spiral>().getXDiff(), spirals[i].GetComponent<Spiral>().getSpiralPos().y + spirals[i].GetComponent<Spiral>().getYDiff(), spirals[i].GetComponent<Spiral>().getSpiralShotSpeed(), spirals[i].GetComponent<Spiral>().getDeg());
+                spBullets[spBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirals[i].GetComponent<Spiral>().getSpiralPos().x + spirals[i].GetComponent<Spiral>().getXDiff(), spirals[i].GetComponent<Spiral>().getSpiralPos().y + spirals[i].GetComponent<Spiral>().getYDiff(), spirals[i].GetComponent<Spiral>().getSpiralShotSpeed(), spirals[i].GetComponent<Spiral>().getDeg(),true);
                 spBullets[spBullets.Count - 1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.cyan);
             }
         }
@@ -154,8 +155,8 @@ public class SecondPattern : MonoBehaviour
                 for (int b = 0; b < spreads[i].GetComponent<AimedSpread>().getNumber(); b++)
                 {
                     aimBullets.Add(Instantiate(shot));
-                    if (spreads[i].GetComponent<AimedSpread>().getNumber() > 1) { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber() - 1, spreads[i].GetComponent<AimedSpread>().getSpread()); }
-                    else { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber(), spreads[i].GetComponent<AimedSpread>().getSpread()); }
+                    if (spreads[i].GetComponent<AimedSpread>().getNumber() > 1) { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber() - 1, spreads[i].GetComponent<AimedSpread>().getSpread(),false); }
+                    else { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber(), spreads[i].GetComponent<AimedSpread>().getSpread(),false); }
                     aimBullets[aimBullets.Count - 1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.red);
                 }
             }

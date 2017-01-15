@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour {
     private Vector2 position;
     private float speed, direction, xAwayFromTarget, yAwayFromTarget, spr;
     private int cur, number;
-    private bool isAimed, isSpread;
+    private bool isAimed, isSpread,wallBounce;
     //Spiral shots will use direction, aimed shots will use the AwayFromTargets
     //The AwayFromTarget variables I used in my earlier game were the difference between the bullet's x and y and the target's x and y
     // Use this for initialization
@@ -33,23 +33,25 @@ public class Bullet : MonoBehaviour {
         }
     }
 
-    public void SpawnDirectional(float x, float y, float s, float dir)
+    public void SpawnDirectional(float x, float y, float s, float dir,bool bounce)
     {
         speed = s;
         direction = dir;
         isAimed = false;
         position = new Vector2(x, y);
+        wallBounce = bounce;
     }
 
-    public void SpawnAimed(float x, float y, float s, float xAway, float yAway)
+    public void SpawnAimed(float x, float y, float s, float xAway, float yAway,bool bounce)
     {
         speed = s;
         xAwayFromTarget = xAway;
         yAwayFromTarget = yAway;
         isAimed = true;
         position = new Vector2(x, y);
+        wallBounce = bounce;
     }
-    public void SpawnSpread(float x, float y, float s, float xAway, float yAway,int current,int total, float spread)
+    public void SpawnSpread(float x, float y, float s, float xAway, float yAway,int current,int total, float spread,bool bounce)
     {
         speed = s;
         xAwayFromTarget = xAway;
@@ -59,6 +61,7 @@ public class Bullet : MonoBehaviour {
         number = total;
         spr = spread;
         isSpread = true;
+        wallBounce = bounce;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -75,5 +78,7 @@ public class Bullet : MonoBehaviour {
     public float getXDiff() { return xAwayFromTarget; } 
     public float getYDiff() { return yAwayFromTarget; }
     public bool getAimed() { return isAimed; }
+    public bool getBounce() { return wallBounce; }
     public Vector2 getPos() { return position; }
+    public void setBounce(bool b) { wallBounce = b; }
 }
