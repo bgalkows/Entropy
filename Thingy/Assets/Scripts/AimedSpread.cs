@@ -7,6 +7,7 @@ public class AimedSpread : MonoBehaviour {
     private float xDiff, yDiff, spd, shotSpd, xAway, yAway, spread;
     private int spawnDelay, number;
     private Vector2 pos;
+    private bool vertBounce, horizBounce;
     // Use this for initialization
     void Start () {
 	}
@@ -17,6 +18,8 @@ public class AimedSpread : MonoBehaviour {
 	}
 
     //aimed methods - sets
+    public void setVB(bool b) { vertBounce = b; }
+    public void setHB(bool b) { horizBounce = b; }
     public void setSpawnDelay(int i) { spawnDelay = i; }
     public void setSpeed(float f) { spd = f; }
     public void setShotSpeed(float f) { shotSpd = f; }
@@ -30,6 +33,8 @@ public class AimedSpread : MonoBehaviour {
     public void setSpread(float f) { spread = f; }
     public void setNum(int i) { number = i; }
     //aimed methods - gets
+    public bool getVG() { return vertBounce; }
+    public bool getHB() { return horizBounce; }
     public bool getSpawnOnBoss() { return spawnsOnBoss; }
     public int getSpawnDelay() { return spawnDelay; }
     public float getSpread() { return spread; }

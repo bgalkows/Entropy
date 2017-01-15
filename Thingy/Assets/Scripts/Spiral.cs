@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Spiral : MonoBehaviour {
-    private bool spiralSpawnsOnBoss, cw;
+    private bool spiralSpawnsOnBoss, cw,bounce;
     private float deg, dir, xDiff, yDiff, spd, shotSpd;
     private int spiralSpawnDelay, spiralDegIncrement,count;
     private Vector2 pos;
@@ -43,9 +43,11 @@ public class Spiral : MonoBehaviour {
     public void setYDiff(float f) { yDiff = f; }
     public void setSpiralPos(Vector2 v) { pos = v; }
     public void setSpawnOnBoss(bool b) { spiralSpawnsOnBoss = b; }
+    public void setBounce(bool b) { bounce = b; }
     //spiral methods - gets
     public bool getSpiralDir() { return cw; }
     public bool getSpawnOnBoss() { return spiralSpawnsOnBoss; }
+    public bool getBounce() { return bounce; }
     public int getSpiralSpawnDelay() { return spiralSpawnDelay; }
     public int getSpiralDegInc() { return spiralDegIncrement; }
     public float getSpiralPosSpeed() { return spd; }

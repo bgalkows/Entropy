@@ -236,7 +236,7 @@ public class Player : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         //Debug.Log("HIT");
-        if(other.gameObject.tag == "Bullet")
+        if(other.gameObject.tag == "Bullet"||other.gameObject.tag=="Refracted")
         {
             Debug.Log("Hit by bullet");
             TakeDamage(20);
