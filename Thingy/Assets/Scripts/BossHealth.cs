@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BossHealth : MonoBehaviour
 {
-    public int startingBossHealth = 100;
+    public int startingBossHealth = 340;
     public int currentBossHealth;
     public Slider bossHealthSlider;
 
