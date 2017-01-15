@@ -8,6 +8,7 @@ TagManager:
   - Boss
   - PBullet
   - Refractor
+  - Refracted
   layers:
   - Default
   - TransparentFX

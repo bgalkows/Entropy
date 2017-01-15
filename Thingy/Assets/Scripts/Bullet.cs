@@ -21,11 +21,13 @@ public class Bullet : MonoBehaviour {
         {
             if (isAimed)
             {
+                direction = (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90);
                 position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90))));
                 shot.transform.position = position;
             }
             else if (isSpread)
             {
+                direction = (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number));
                 position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number)))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number)))));
                 shot.transform.position = position;
             }
@@ -39,11 +41,13 @@ public class Bullet : MonoBehaviour {
         {
             if (isAimed)
             {
+                direction = (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90);
                 position = new Vector2(position.x - (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90))));
                 shot.transform.position = position;
             }
             else if (isSpread)
             {
+                direction = (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number));
                 position = new Vector2(position.x - (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number)))), position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number)))));
                 shot.transform.position = position;
             }
@@ -57,11 +61,13 @@ public class Bullet : MonoBehaviour {
         {
             if (isAimed)
             {
+                direction = (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90);
                 position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90))), position.y + (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90))));
                 shot.transform.position = position;
             }
             else if (isSpread)
             {
+                direction = (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number));
                 position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number)))), position.y + (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number)))));
                 shot.transform.position = position;
             }
@@ -75,11 +81,13 @@ public class Bullet : MonoBehaviour {
         {
             if (isAimed)
             {
+                direction = (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90);
                 position = new Vector2(-1*(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90)))), -1*(position.y - ( speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90)))));
                 shot.transform.position = position;
             }
             else if (isSpread)
             {
+                direction = (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number));
                 position = new Vector2(-1*(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number))))), -1*(position.y - (speed * Mathf.Sin(Mathf.Deg2Rad * (Mathf.Rad2Deg * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget)) - 90 - (spr / 2) + (cur * spr / number))))));
                 shot.transform.position = position;
             }
@@ -127,10 +135,6 @@ public class Bullet : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.tag == "Player")
-        {
-            Destroy(gameObject);
-        }
-        if (other.gameObject.tag == "Refractor")
         {
             Destroy(gameObject);
         }

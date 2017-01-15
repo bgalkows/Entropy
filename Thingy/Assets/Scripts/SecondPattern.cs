@@ -7,14 +7,16 @@ public class SecondPattern : MonoBehaviour
     //Boss script will change variables on this based on health loss
 
     //Boss related
-    public GameObject shot, bulletSpawner, boss, player, exploder, playerBullet;
+    public GameObject shot, bulletSpawner, boss, player, exploder, playerBullet,rShot;
     private bool isAimed, aimedShots,firing;
     private int count,start; //start is startPhase value
     private float speed, direction, xAwayFromTarget, yAwayFromTarget, xSizeDiff, ySizeDiff;
     private Vector2 position;
-
+    private int refractOffset; //30 degrees for a 60 degree cone
     //lists of bullets
-    private List<GameObject> spBullets, aimBullets, explosives, spirals, spreads, spawnerSpawners, explosiveSpawners, explosionBullets, playerBullets,refractellites,refracted;
+    private List<GameObject> spBullets, aimBullets, explosives, spirals, spreads, spawnerSpawners, explosiveSpawners, explosionBullets, playerBullets,refracted;
+    private GameObject[] refractellites;
+    //refracted bullets are just normal bullets with a different tag
     //the SizeDiffs are for in case we want to adjust the position the bullets spawn from on the object
     // Use this for initialization
     void Start()
@@ -24,8 +26,13 @@ public class SecondPattern : MonoBehaviour
         spBullets = new List<GameObject>();
         aimBullets = new List<GameObject>();
         explosionBullets = new List<GameObject>();
-        refractellites = new List<GameObject>();
+        refractellites = GameObject.FindGameObjectsWithTag("Refractor");
+        for (int i = 0; i < refractellites.Length;i++)
+        {
+            refractellites[i].GetComponent<Refractellite>().setPos(new Vector2(20, 20));
+        }
         refracted = new List<GameObject>();
+        refractOffset = 30;
         count = 0;
         xSizeDiff = 0;
         ySizeDiff = 0;
@@ -117,20 +124,40 @@ public class SecondPattern : MonoBehaviour
                     if (b.GetComponent<Bullet>().getBounce() && tmpX > 12 || tmpX < -12) { b.GetComponent<Bullet>().bounce();b.GetComponent<Bullet>().setBounce(false); }
                 }
             }
-            for (int i = aimBullets.Count - 1; i >= 0; i--)
+            if (boss.GetComponent<PhaseControl>().getPhase() <= start - 1)
             {
-                GameObject b = aimBullets[i];
-                if (b == null) { aimBullets.Remove(b); }
-                else
+                for (int i = aimBullets.Count - 1; i >= 0; i--)
                 {
-                    float tmpX = b.GetComponent<Bullet>().getPos().x;
-                    float tmpY = b.GetComponent<Bullet>().getPos().y;
-                    bool hB = b.GetComponent<Bullet>().getBounce();
-                    bool vB = b.GetComponent<Bullet>().getVBounce();
-                    if ((!hB && (tmpX > 12 || tmpX < -12)) || (!vB && (tmpY > 5 || tmpY < -5))) { Destroy(b); }
-                    if (hB && (tmpX > 12 || tmpX < -12))
-                    { b.GetComponent<Bullet>().bounce(); }
-                    if (vB && (tmpY > 5 || tmpY < -5)) { b.GetComponent<Bullet>().vertBounce(); }
+                    GameObject b = aimBullets[i];
+                    if (b == null) { aimBullets.Remove(b); }
+                    else
+                    {
+                        float tmpX = b.GetComponent<Bullet>().getPos().x;
+                        float tmpY = b.GetComponent<Bullet>().getPos().y;
+                        bool hB = b.GetComponent<Bullet>().getBounce();
+                        bool vB = b.GetComponent<Bullet>().getVBounce();
+                        if ((!hB && (tmpX > 12 || tmpX < -12)) || (!vB && (tmpY > 5 || tmpY < -5))) { Destroy(b); }
+                        if (hB && (tmpX > 12 || tmpX < -12))
+                        { b.GetComponent<Bullet>().bounce(); }
+                        if (vB && (tmpY > 5 || tmpY < -5)) { b.GetComponent<Bullet>().vertBounce(); }
+                    }
+                }
+                for (int i = 0; i < spreads.Count; i++)
+                {
+                    if (spreads[i].GetComponent<AimedSpread>().getSpawnOnBoss())
+                    { spreads[i].GetComponent<AimedSpread>().setPos(position); }
+                    if (count % spreads[i].GetComponent<AimedSpread>().getSpawnDelay() == 0)
+                    {
+                        float xAway = player.transform.position.x - position.x;
+                        float yAway = player.transform.position.y - position.y;
+                        for (int b = 0; b < spreads[i].GetComponent<AimedSpread>().getNumber(); b++)
+                        {
+                            aimBullets.Add(Instantiate(shot));
+                            if (spreads[i].GetComponent<AimedSpread>().getNumber() > 1) { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber() - 1, spreads[i].GetComponent<AimedSpread>().getSpread(), true, true); }
+                            else { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber(), spreads[i].GetComponent<AimedSpread>().getSpread(), true, true); }
+                            aimBullets[aimBullets.Count - 1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.red);
+                        }
+                    }
                 }
             }
             for (int i = explosives.Count - 1; i >= 0; i--)
@@ -196,20 +223,45 @@ public class SecondPattern : MonoBehaviour
                     }
                 }
             }
-            for (int i = 0; i < spreads.Count; i++)
+            if (boss.GetComponent<PhaseControl>().getPhase() <= start-2)
             {
-                if (spreads[i].GetComponent<AimedSpread>().getSpawnOnBoss())
-                { spreads[i].GetComponent<AimedSpread>().setPos(position); }
-                if (count % spreads[i].GetComponent<AimedSpread>().getSpawnDelay() == 0)
+                for (int i = 0; i < refractellites.Length; i++)
                 {
-                    float xAway = player.transform.position.x - position.x;
-                    float yAway = player.transform.position.y - position.y;
-                    for (int b = 0; b < spreads[i].GetComponent<AimedSpread>().getNumber(); b++)
+                    refractellites[i].GetComponent<Refractellite>().update();
+                    if (!refractellites[i].GetComponent<Refractellite>().isMoving())
                     {
-                        aimBullets.Add(Instantiate(shot));
-                        if (spreads[i].GetComponent<AimedSpread>().getNumber() > 1) { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber() - 1, spreads[i].GetComponent<AimedSpread>().getSpread(), true,true); }
-                        else { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber(), spreads[i].GetComponent<AimedSpread>().getSpread(), true,true); }
-                        aimBullets[aimBullets.Count - 1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.red);
+                        refractellites[i].GetComponent<Refractellite>().startL(1.5f);
+                    }
+                    for (int b = 0; b < refractellites[i].GetComponent<Refractellite>().getFired().Count; b++)
+                    {
+                        if (!refractellites[i].GetComponent<Refractellite>().getFired()[b])
+                        {
+                            for (int c = 0; c < 2; c++)
+                            {
+                                Bullet refractor = refractellites[i].GetComponent<Refractellite>().getRefract()[b];
+                                refracted.Add(Instantiate(rShot));
+                                refracted[refracted.Count - 1].gameObject.tag = "Refracted";
+                                refracted[refracted.Count - 1].GetComponent<Bullet>().SpawnDirectional(refractellites[i].GetComponent<Refractellite>().getPos().x, refractellites[i].GetComponent<Refractellite>().getPos().y, .03f, refractellites[i].GetComponent<Refractellite>().getAngle() / 2 + c * 30, true);
+                            }
+                            refractellites[i].GetComponent<Refractellite>().fire(b);
+                        }
+                        
+                    }
+                }
+                for (int i = refracted.Count-1;i>=0;i--)
+                {
+                    GameObject b = refracted[i];
+                    if (b == null) { refracted.Remove(b); }
+                    else
+                    {
+                        float tmpX = b.GetComponent<Bullet>().getPos().x;
+                        float tmpY = b.GetComponent<Bullet>().getPos().y;
+                        bool hB = b.GetComponent<Bullet>().getBounce();
+                        bool vB = b.GetComponent<Bullet>().getVBounce();
+                        if ((!hB && (tmpX > 12 || tmpX < -12)) || (!vB && (tmpY > 5 || tmpY < -5))) { Destroy(b); }
+                        if (hB && (tmpX > 12 || tmpX < -12))
+                        { b.GetComponent<Bullet>().bounce(); }
+                        if (vB && (tmpY > 5 || tmpY < -5)) { b.GetComponent<Bullet>().vertBounce(); }
                     }
                 }
             }

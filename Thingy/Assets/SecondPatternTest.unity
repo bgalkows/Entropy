@@ -433,9 +433,39 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114790392814188936, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+        type: 2}
+      propertyPath: sat
+      value: 
+      objectReference: {fileID: 1611223552}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1611223552 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1179171676415020, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+    type: 2}
+  m_PrefabInternal: {fileID: 993958908}
+--- !u!50 &1611223553
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1611223552}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &2050962438
 Prefab:
   m_ObjectHideFlags: 0
@@ -485,8 +515,13 @@ Prefab:
       propertyPath: boss
       value: 
       objectReference: {fileID: 2050962439}
+    - target: {fileID: 1363381030871702, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+      propertyPath: m_Name
+      value: Boss
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 114405616139947132, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+    - {fileID: 114081316244828020, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &2050962439 stripped
@@ -513,3 +548,4 @@ MonoBehaviour:
   exploder: {fileID: 1567768529453142, guid: f93d688037988f2498acfc69c82780e2, type: 2}
   playerBullet: {fileID: 1021326584077002, guid: 664df0d8165007b4f92845274a8b02fd,
     type: 2}
+  rShot: {fileID: 1986083154071376, guid: 3ea22c073e6481d40840acccf96a2308, type: 2}

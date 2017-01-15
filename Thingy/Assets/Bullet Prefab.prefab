@@ -69,6 +69,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shot: {fileID: 1636645848115024}
   player: {fileID: 1937865341692674, guid: a2791c189ee78b74b9218c535cf5fee4, type: 2}
+  isAimed: 0
+  isSpread: 0
+  wallBounce: 0
+  bounced: 0
+  vBounce: 0
+  vBounced: 0
 --- !u!212 &212631223931607986
 SpriteRenderer:
   m_ObjectHideFlags: 1
