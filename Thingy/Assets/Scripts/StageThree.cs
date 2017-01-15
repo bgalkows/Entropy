@@ -7,7 +7,7 @@ public class StageThree: MonoBehaviour
     //Boss script will change variables on this based on health loss
 
     //Boss related
-    public GameObject shot, bulletSpawner, boss, player, exploder, playerBullet, rShot, spirSat, spirSatL;
+    public GameObject shot, bulletSpawner, boss, player, exploder, playerBullet, rShot, spirSat, spirSatL, ringShot;
     private bool isAimed, aimedShots, firing, spawnerSpawnerStream, ascending;
     private int count, start; //start is startPhase value
     private float speed, direction, xAwayFromTarget, yAwayFromTarget, xSizeDiff, ySizeDiff;
@@ -71,7 +71,7 @@ public class StageThree: MonoBehaviour
         //addSpread(160, 20, .1f, 8, true, 0, 0, true, false);
         for (int i = 0; i < 2; i++)
         {
-            addSpiral(safeRandomValue()*360,(int)(safeRandomValue()*15)+1, safeRandomValue()/ 100,(int)(safeRandomValue() * 3),true,0,0,false);
+            addSpiral(safeRandomValue()*360,(int)(safeRandomValue()*15)+3, safeRandomValue()/ 100,(int)(safeRandomValue() * 3),true,0,0,false);
         }
         spirSat.GetComponent<Spiral>().setDeg(110);
         spirSat.GetComponent<Spiral>().setSpiralSpawnDelay(1);
@@ -317,8 +317,8 @@ public class StageThree: MonoBehaviour
                     {
                         for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
                         {
-                            ringStream.Add(Instantiate(shot));
-                            ringStream[ringStream.Count - 1].GetComponent<Bullet>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed() + (5 - interval) * .004f, 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()) + 22.5f+inc*((int)(Random.value)*10), false);
+                            ringStream.Add(Instantiate(ringShot));
+                            ringStream[ringStream.Count - 1].GetComponent<Bullet>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed() + (5 - interval) * .004f, 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()) +inc*((int)(Random.value)*10), false);
                             inc += 1;
                         }
                     }
