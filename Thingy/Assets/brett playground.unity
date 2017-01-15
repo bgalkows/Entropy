@@ -213,6 +213,7 @@ MonoBehaviour:
   firstTick: {fileID: 1337894942}
   secondTick: {fileID: 406956966}
   thirdTick: {fileID: 915254308}
+  renderer: {fileID: 0}
   PhaseControl: {fileID: 0}
 --- !u!1 &406956964
 GameObject:
@@ -1338,6 +1339,11 @@ Prefab:
       propertyPath: m_SortingLayerID
       value: 1261429323
       objectReference: {fileID: 0}
+    - target: {fileID: 114081316244828020, guid: 25ca62d4c8146d746a3b7291f047a701,
+        type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1561943935}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
   m_IsPrefabParent: 0
