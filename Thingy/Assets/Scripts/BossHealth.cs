@@ -21,6 +21,8 @@ public class BossHealth : MonoBehaviour
 
     public PhaseControl PhaseControl;
 
+    public int bossLives;
+
     // Use this for initialization
     void Start ()
     {
@@ -64,13 +66,12 @@ public class BossHealth : MonoBehaviour
     {
         bossIsDead = true;
         StartCoroutine("nextLevel");
+        bossLives++;
     }
 
     IEnumerator nextLevel()
     {
         //RESTART BOSS HEALTH
-        //currentHealth = 100;
-        //HealthBar.healthSlider.value = currentHealth;
 
         //flashing!
         renderer.color = new Color(0, 0, 0, 0);

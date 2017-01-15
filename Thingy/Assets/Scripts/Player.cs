@@ -214,7 +214,7 @@ public class Player : MonoBehaviour {
     public void GameOver()
     {
         Debug.Log("GAME OVER");
-       //score
+        score.bossScore();
         SceneManager.LoadScene("GameOver");
     }
 
