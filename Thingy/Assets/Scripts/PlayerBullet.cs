@@ -27,10 +27,9 @@ public class PlayerBullet : MonoBehaviour {
         position = new Vector2(x, y);
     }
 
-    void onTriggerEnter2D(Collider2D c)
+    void OnTriggerEnter2D(Collider2D c)
     {
-        print("true");
-        if (c.gameObject.tag == "Boss")
+        if (c.gameObject.name == "Boss")
         {
             Destroy(gameObject);
         }

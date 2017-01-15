@@ -195,23 +195,26 @@ public class Spawner : MonoBehaviour
                     spawnerSpawners[i].GetComponent<Ring>().setPos(position);
                     if (count % spawnerSpawners[i].GetComponent<Ring>().getSpawnDelay() == 0)
                     {
-                        for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
-                        {
-                            explosiveSpawners.Add(Instantiate(bulletSpawner));
-                            explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()), 50, .15f, 5, false, (360 / (spawnerSpawners[i].GetComponent<Ring>().getNumber())) / 2);
-                        }
+                            for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
+                            {
+                                explosiveSpawners.Add(Instantiate(bulletSpawner));
+                                explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()), 50, .15f, 5, false, (360 / (spawnerSpawners[i].GetComponent<Ring>().getNumber())) / 2);
+                            }
                     }
                 }
             }
         }
-        for (int i = 0; i < explosiveSpawners.Count; i++)
+        if (boss.GetComponent<PhaseControl>().getPhase() <= 1)
         {
-            if (count % explosiveSpawners[i].GetComponent<BulletSpawner>().getDelay() == 0&&!(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y<-3))
+            for (int i = 0; i < explosiveSpawners.Count; i++)
             {
-                for (int b = 0; b < explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(); b++)
+                if (count % explosiveSpawners[i].GetComponent<BulletSpawner>().getDelay() == 0 && !(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y < -3))
                 {
-                    explosives.Add(Instantiate(exploder));
-                    explosives[explosives.Count - 1].GetComponent<ExplodingShot>().SpawnDirectional(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().x, explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y, explosiveSpawners[i].GetComponent<BulletSpawner>().getShotSpd(), 360 * b / explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(), false, 4, .08f,400);
+                    for (int b = 0; b < explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(); b++)
+                    {
+                        explosives.Add(Instantiate(exploder));
+                        explosives[explosives.Count - 1].GetComponent<ExplodingShot>().SpawnDirectional(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().x, explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y, explosiveSpawners[i].GetComponent<BulletSpawner>().getShotSpd(), 360 * b / explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(), false, 4, .08f, 400);
+                    }
                 }
             }
         }
@@ -259,7 +262,7 @@ public class Spawner : MonoBehaviour
         spawnerSpawners[spawnerSpawners.Count - 1].GetComponent<Ring>().setShotSpeed(speed);
         spawnerSpawners[spawnerSpawners.Count - 1].GetComponent<Ring>().setSpawnOnBoss(onBoss);
     }
-    
+
 
     //boss methods - sets
     void setSizeDiff(int x, int y) { xSizeDiff = x; ySizeDiff = y; }

@@ -16,7 +16,7 @@ public class PhaseControl : MonoBehaviour {
 		
 	}
 
-    void hit()
+    public void hit()
     {
         hp -= 1;
         if (hp == 0)
@@ -25,11 +25,10 @@ public class PhaseControl : MonoBehaviour {
             hp = 110 - (phases * 10);
         }
     }
-    void onTriggerEnter2D(Collider2D c)
+    void OnTriggerEnter2D(Collider2D c)
     {
-        print("thing");
-        if (c.gameObject.tag == "PBullet")
-        hit();
+        if (c.gameObject.name == "PlayerBullet Prefab(Clone)")
+        { hit(); }
     }
     public int getPhase() { return phases; }
     public void setPhase(int i) { phases = i; hp = 110 - (phases * 10); }
