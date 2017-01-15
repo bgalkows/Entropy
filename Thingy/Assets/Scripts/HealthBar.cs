@@ -12,9 +12,9 @@ public class HealthBar : MonoBehaviour
     public Image heart1;
     public Image heart2;
     public Image heart3;
-    public float flashSpeed = 5f;
+    public float flashSpeed = 10f;
     public int livesLeft = 3;
-    public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
+    public Color flashColor = new Color(255, 0f, 0f, 255f);
     public bool isDead = false;
 
     public bool damaged;
