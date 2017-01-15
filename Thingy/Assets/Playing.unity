@@ -130,35 +130,18 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114405616139947132, guid: 25ca62d4c8146d746a3b7291f047a701,
-        type: 2}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1363123431}
-    - target: {fileID: 114405616139947132, guid: 25ca62d4c8146d746a3b7291f047a701,
-        type: 2}
-      propertyPath: phaseControl
-      value: 
-      objectReference: {fileID: 169014666}
     - target: {fileID: 1363381030871702, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
       propertyPath: m_Name
       value: Boss
       objectReference: {fileID: 0}
-    - target: {fileID: 114365410385963580, guid: 25ca62d4c8146d746a3b7291f047a701,
+    - target: {fileID: 114081316244828020, guid: 25ca62d4c8146d746a3b7291f047a701,
         type: 2}
-      propertyPath: boss
+      propertyPath: player
       value: 
-      objectReference: {fileID: 1969746817}
-    m_RemovedComponents:
-    - {fileID: 114135113470687590, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+      objectReference: {fileID: 1363123431}
+    m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &169014666 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114365410385963580, guid: 25ca62d4c8146d746a3b7291f047a701,
-    type: 2}
-  m_PrefabInternal: {fileID: 169014665}
-  m_Script: {fileID: 11500000, guid: a57f42e5dabeb2142b26488d4ad5cf5a, type: 3}
 --- !u!1001 &624141168
 Prefab:
   m_ObjectHideFlags: 0
@@ -510,8 +493,3 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4287eed800ecf8e4a8da03de9c504d9d, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &1969746817 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1363381030871702, guid: 25ca62d4c8146d746a3b7291f047a701,
-    type: 2}
-  m_PrefabInternal: {fileID: 169014665}

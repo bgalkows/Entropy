@@ -20,10 +20,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4186351995186312}
   - component: {fileID: 212071201384714738}
-  - component: {fileID: 114135113470687590}
   - component: {fileID: 61550437030177082}
   - component: {fileID: 50371396702404486}
   - component: {fileID: 114365410385963580}
+  - component: {fileID: 114081316244828020}
   m_Layer: 0
   m_Name: Boss Prefab
   m_TagString: Boss
@@ -78,7 +78,7 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 2, y: 3}
---- !u!114 &114135113470687590
+--- !u!114 &114081316244828020
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -86,9 +86,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1363381030871702}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e37393e92b854542aff8469fc927308, type: 3}
+  m_Script: {fileID: 11500000, guid: 51adfbe67e82ec6448f76783ef80d23b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shot: {fileID: 1636645848115024, guid: 6543efd923deec14ca770d83aef804d8, type: 2}
+  bulletSpawner: {fileID: 1742249596859834, guid: 38b2ce8ccf47f1442bf300c718c4a83f,
+    type: 2}
+  boss: {fileID: 1363381030871702}
+  player: {fileID: 0}
+  exploder: {fileID: 1567768529453142, guid: f93d688037988f2498acfc69c82780e2, type: 2}
+  playerBullet: {fileID: 1021326584077002, guid: 664df0d8165007b4f92845274a8b02fd,
+    type: 2}
 --- !u!114 &114365410385963580
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -100,7 +108,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a57f42e5dabeb2142b26488d4ad5cf5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boss: {fileID: 0}
+  hp: 70
+  boss: {fileID: 1363381030871702}
+  loss: 0
 --- !u!212 &212071201384714738
 SpriteRenderer:
   m_ObjectHideFlags: 1

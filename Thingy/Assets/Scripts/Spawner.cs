@@ -203,17 +203,17 @@ public class Spawner : MonoBehaviour
                     }
                 }
             }
-        }
-        if (boss.GetComponent<PhaseControl>().getPhase() <= 1)
-        {
-            for (int i = 0; i < explosiveSpawners.Count; i++)
+            if (boss.GetComponent<PhaseControl>().getPhase() <= 1)
             {
-                if (count % explosiveSpawners[i].GetComponent<BulletSpawner>().getDelay() == 0 && !(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y < -3))
+                for (int i = 0; i < explosiveSpawners.Count; i++)
                 {
-                    for (int b = 0; b < explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(); b++)
+                    if (count % explosiveSpawners[i].GetComponent<BulletSpawner>().getDelay() == 0 && !(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y < -3))
                     {
-                        explosives.Add(Instantiate(exploder));
-                        explosives[explosives.Count - 1].GetComponent<ExplodingShot>().SpawnDirectional(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().x, explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y, explosiveSpawners[i].GetComponent<BulletSpawner>().getShotSpd(), 360 * b / explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(), false, 4, .08f, 400);
+                        for (int b = 0; b < explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(); b++)
+                        {
+                            explosives.Add(Instantiate(exploder));
+                            explosives[explosives.Count - 1].GetComponent<ExplodingShot>().SpawnDirectional(explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().x, explosiveSpawners[i].GetComponent<BulletSpawner>().getPosition().y, explosiveSpawners[i].GetComponent<BulletSpawner>().getShotSpd(), 360 * b / explosiveSpawners[i].GetComponent<BulletSpawner>().getNum(), false, 4, .08f, 400);
+                        }
                     }
                 }
             }

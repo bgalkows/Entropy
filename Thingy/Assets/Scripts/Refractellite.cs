@@ -7,6 +7,7 @@ public class Refractellite : MonoBehaviour {
     private List<bool> hasFired;
     // Use this for initialization
     void Start() {
+        hasFired = new List<bool>();
         refract = new List<GameObject>();
     }
 
