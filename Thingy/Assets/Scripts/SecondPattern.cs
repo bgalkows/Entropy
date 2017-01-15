@@ -7,14 +7,14 @@ public class SecondPattern : MonoBehaviour
     //Boss script will change variables on this based on health loss
 
     //Boss related
-    public GameObject shot, bulletSpawner, boss, player, exploder;
-    private bool isAimed, aimedShots;
-    private int count;
+    public GameObject shot, bulletSpawner, boss, player, exploder, playerBullet;
+    private bool isAimed, aimedShots,firing;
+    private int count,hp,phases;
     private float speed, direction, xAwayFromTarget, yAwayFromTarget, xSizeDiff, ySizeDiff;
     private Vector2 position;
 
     //lists of bullets
-    private List<GameObject> spBullets, aimBullets, explosives, spirals, spreads, spawnerSpawners, explosiveSpawners, explosionBullets;
+    private List<GameObject> spBullets, aimBullets, explosives, spirals, spreads, spawnerSpawners, explosiveSpawners, explosionBullets, playerBullets;
     //the SizeDiffs are for in case we want to adjust the position the bullets spawn from on the object
     // Use this for initialization
     void Start()
@@ -27,6 +27,9 @@ public class SecondPattern : MonoBehaviour
         ySizeDiff = 0;
         speed = 0;
         direction = 0;
+        phases = 0;
+        hp = 110 - (phases * 10);
+        playerBullets = new List<GameObject>();
         spirals = new List<GameObject>();
         spreads = new List<GameObject>();
         //AimedSpreads can be used to create rings of bullets with one aimed at the player- just set the spread parameter to 360
@@ -65,6 +68,17 @@ public class SecondPattern : MonoBehaviour
             position = boss.transform.position;
             //position = new Vector2(position.x + (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))), position.y - (speed * Mathf.Cos(Mathf.Deg2Rad * (Mathf.Atan2(xAwayFromTarget, yAwayFromTarget) - 90))));
             //boss.transform.position = position;
+        }
+        for (int i = 0; i < playerBullets.Count; i++)
+        {
+            GameObject b = playerBullets[i];
+            if (b == null) { aimBullets.Remove(b); }
+            else
+            {
+                float tmpX = b.GetComponent<PlayerBullet>().getPos().x;
+                float tmpY = b.GetComponent<PlayerBullet>().getPos().y;
+                if (tmpX > 12 || tmpX < -12 || tmpY > 12 || tmpY < -12) { Destroy(b); }
+            }
         }
         for (int i = spBullets.Count - 1; i >= 0; i--)
         {
@@ -184,6 +198,18 @@ public class SecondPattern : MonoBehaviour
                 }
             }
         }
+
+        if (Input.GetKey(KeyCode.Z))
+        {
+            if (firing)
+            {
+                if (count % 3 == 0)
+                {
+                    playerBullets.Add(Instantiate(playerBullet));
+                    playerBullets[playerBullets.Count - 1].GetComponent<PlayerBullet>().SpawnDirectional(player.transform.position.x, player.transform.position.y, 8, 270);
+                }
+            }
+        }
     }
 
     void addSpiral(float deg, int delay, float speed, int inc, bool onBoss,float x,float y)
@@ -220,6 +246,7 @@ public class SecondPattern : MonoBehaviour
         spawnerSpawners[spawnerSpawners.Count - 1].GetComponent<Ring>().setSpawnOnBoss(onBoss);
         spawnerSpawners[spawnerSpawners.Count - 1].GetComponent<Ring>().setPos(new Vector2(x, y));
     }
+    
 
     //boss methods - sets
     void setSizeDiff(int x, int y) { xSizeDiff = x; ySizeDiff = y; }

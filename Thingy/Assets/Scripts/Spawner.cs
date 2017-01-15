@@ -8,7 +8,7 @@ public class Spawner : MonoBehaviour
 
     //Boss related
     public GameObject shot,bulletSpawner, boss,player,exploder,playerBullet;
-    private bool isAimed,aimedShots;
+    private bool isAimed,aimedShots,firing;
     private int count;
     private float speed, direction, xAwayFromTarget, yAwayFromTarget, xSizeDiff, ySizeDiff;
     private Vector2 position;
@@ -22,6 +22,7 @@ public class Spawner : MonoBehaviour
         spBullets = new List<GameObject>();
         aimBullets = new List<GameObject>();
         explosionBullets = new List<GameObject>();
+        boss.GetComponent<PhaseControl>().setPhase(4);
         count = 0;
         xSizeDiff = 0;
         ySizeDiff = 0;
@@ -54,6 +55,10 @@ public class Spawner : MonoBehaviour
     {
         count++;
         //Boss movement
+        if (count % 15 == 0)
+        {
+            firing = !firing;
+        }
         if (!isAimed)
         {
             position = boss.transform.position;
@@ -88,26 +93,14 @@ public class Spawner : MonoBehaviour
                 if (tmpX > 12 || tmpX < -12 || tmpY > 12 || tmpY < -12) { Destroy(b); }
             }
         }
-        for (int i = explosives.Count - 1; i >= 0; i--)
+        for (int i = 0; i < playerBullets.Count; i++)
         {
-            GameObject b = explosives[i];
-            if (b == null) { explosives.Remove(b); }
-            else if (b.GetComponent<ExplodingShot>().getSpd() < 0 && !b.GetComponent<ExplodingShot>().getExploded())
-            {
-                //explodes it once direction reverses - aboslutely impossible to dodge with more than 2 fired with low speed
-                for (int c = 0; c < b.GetComponent<ExplodingShot>().getNum(); c++)
-                {
-                    //explosionBullets.Add(Instantiate(shot));
-                    //explosionBullets[explosionBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(b.transform.position.x, b.transform.position.y, b.GetComponent<ExplodingShot>().getShotSpd(), c * 360 / b.GetComponent<ExplodingShot>().getNum());
-                }
-                b.GetComponent<ExplodingShot>().explosion();
-                //Destroy(b);
-            }
-            else if (b.GetComponent<ExplodingShot>().getCD() <=0) { Destroy(b); }
+            GameObject b = playerBullets[i];
+            if (b == null) { aimBullets.Remove(b); }
             else
             {
-                float tmpX = b.GetComponent<ExplodingShot>().getPos().x;
-                float tmpY = b.GetComponent<ExplodingShot>().getPos().y;
+                float tmpX = b.GetComponent<PlayerBullet>().getPos().x;
+                float tmpY = b.GetComponent<PlayerBullet>().getPos().y;
                 if (tmpX > 12 || tmpX < -12 || tmpY > 12 || tmpY < -12) { Destroy(b); }
             }
         }
@@ -125,7 +118,7 @@ public class Spawner : MonoBehaviour
         for (int i = explosiveSpawners.Count - 1; i >= 0; i--)
         {
             GameObject b = explosiveSpawners[i];
-            if (b == null) { explosiveSpawners.Remove(b);}
+            if (b == null) { explosiveSpawners.Remove(b); }
             else
             {
                 float tmpX = b.GetComponent<BulletSpawner>().getPosition().x;
@@ -133,43 +126,81 @@ public class Spawner : MonoBehaviour
                 if (tmpX > 12 || tmpX < -12 || tmpY > 12 || tmpY < -12) { Destroy(b); }
             }
         }
-        //Spiral spawner movement
-        for (int i = 0; i < spirals.Count; i++)
+        if (boss.GetComponent<PhaseControl>().getPhase() != 0)
         {
-            spirals[i].GetComponent<Spiral>().incrementDeg();
-            spirals[i].GetComponent<Spiral>().setSpiralPos(position);
-            if (count % spirals[i].GetComponent<Spiral>().getSpiralSpawnDelay() == 0)
+            if (boss.GetComponent<PhaseControl>().getPhase() <= 1)
             {
-                spBullets.Add(Instantiate(shot));
-                spBullets[spBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirals[i].GetComponent<Spiral>().getSpiralPos().x + spirals[i].GetComponent<Spiral>().getXDiff(), spirals[i].GetComponent<Spiral>().getSpiralPos().y + spirals[i].GetComponent<Spiral>().getYDiff(), spirals[i].GetComponent<Spiral>().getSpiralShotSpeed(), spirals[i].GetComponent<Spiral>().getDeg(),false);
-                spBullets[spBullets.Count - 1].GetComponent<SpriteRenderer>().material.SetColor("_Color", new Color(244,204,190));
-            }
-        }
-        for (int i = 0; i < spreads.Count; i++)
-        {
-            spreads[i].GetComponent<AimedSpread>().setPos(position);
-            if (count % spreads[i].GetComponent<AimedSpread>().getSpawnDelay() == 0)
-            {
-                float xAway = player.transform.position.x - position.x;
-                float yAway = player.transform.position.y - position.y;
-                for (int b = 0; b < spreads[i].GetComponent<AimedSpread>().getNumber(); b++)
+                for (int i = explosives.Count - 1; i >= 0; i--)
                 {
-                    aimBullets.Add(Instantiate(shot));
-                    if (spreads[i].GetComponent<AimedSpread>().getNumber() > 1) { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber() - 1, spreads[i].GetComponent<AimedSpread>().getSpread(),false); }
-                    else { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber(), spreads[i].GetComponent<AimedSpread>().getSpread(),false); }
-                    aimBullets[aimBullets.Count-1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.red);
+                    GameObject b = explosives[i];
+                    if (b == null) { explosives.Remove(b); }
+                    else if (b.GetComponent<ExplodingShot>().getSpd() < 0 && !b.GetComponent<ExplodingShot>().getExploded())
+                    {
+                        //explodes it once direction reverses - aboslutely impossible to dodge with more than 2 fired with low speed
+                        for (int c = 0; c < b.GetComponent<ExplodingShot>().getNum(); c++)
+                        {
+                            //explosionBullets.Add(Instantiate(shot));
+                            //explosionBullets[explosionBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(b.transform.position.x, b.transform.position.y, b.GetComponent<ExplodingShot>().getShotSpd(), c * 360 / b.GetComponent<ExplodingShot>().getNum());
+                        }
+                        b.GetComponent<ExplodingShot>().explosion();
+                        //Destroy(b);
+                    }
+                    else if (b.GetComponent<ExplodingShot>().getCD() <= 0) { Destroy(b); }
+                    else
+                    {
+                        float tmpX = b.GetComponent<ExplodingShot>().getPos().x;
+                        float tmpY = b.GetComponent<ExplodingShot>().getPos().y;
+                        if (tmpX > 12 || tmpX < -12 || tmpY > 12 || tmpY < -12) { Destroy(b); }
+                    }
                 }
             }
-        }
-        for (int i = 0; i < spawnerSpawners.Count; i++)
-        {
-            spawnerSpawners[i].GetComponent<Ring>().setPos(position);
-            if (count % spawnerSpawners[i].GetComponent<Ring>().getSpawnDelay() == 0)
+            //Spiral spawner movement
+            if (boss.GetComponent<PhaseControl>().getPhase() <= 4)
             {
-                for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
+                for (int i = 0; i < spirals.Count; i++)
                 {
-                    explosiveSpawners.Add(Instantiate(bulletSpawner));
-                    explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()), 50, .15f, 5,false,(360/(spawnerSpawners[i].GetComponent<Ring>().getNumber()))/2);
+                    spirals[i].GetComponent<Spiral>().incrementDeg();
+                    spirals[i].GetComponent<Spiral>().setSpiralPos(position);
+                    if (count % spirals[i].GetComponent<Spiral>().getSpiralSpawnDelay() == 0)
+                    {
+                        spBullets.Add(Instantiate(shot));
+                        spBullets[spBullets.Count - 1].GetComponent<Bullet>().SpawnDirectional(spirals[i].GetComponent<Spiral>().getSpiralPos().x + spirals[i].GetComponent<Spiral>().getXDiff(), spirals[i].GetComponent<Spiral>().getSpiralPos().y + spirals[i].GetComponent<Spiral>().getYDiff(), spirals[i].GetComponent<Spiral>().getSpiralShotSpeed(), spirals[i].GetComponent<Spiral>().getDeg(), false);
+                        spBullets[spBullets.Count - 1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.cyan);
+                    }
+                }
+            }
+            if (boss.GetComponent<PhaseControl>().getPhase() <= 3)
+            {
+                for (int i = 0; i < spreads.Count; i++)
+                {
+                    spreads[i].GetComponent<AimedSpread>().setPos(position);
+                    if (count % spreads[i].GetComponent<AimedSpread>().getSpawnDelay() == 0)
+                    {
+                        float xAway = player.transform.position.x - position.x;
+                        float yAway = player.transform.position.y - position.y;
+                        for (int b = 0; b < spreads[i].GetComponent<AimedSpread>().getNumber(); b++)
+                        {
+                            aimBullets.Add(Instantiate(shot));
+                            if (spreads[i].GetComponent<AimedSpread>().getNumber() > 1) { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber() - 1, spreads[i].GetComponent<AimedSpread>().getSpread(), false); }
+                            else { aimBullets[aimBullets.Count - 1].GetComponent<Bullet>().SpawnSpread(spreads[i].GetComponent<AimedSpread>().getPos().x + spreads[i].GetComponent<AimedSpread>().getXDiff(), spreads[i].GetComponent<AimedSpread>().GetComponent<AimedSpread>().getPos().y + spreads[i].GetComponent<AimedSpread>().getYDiff(), spreads[i].GetComponent<AimedSpread>().getShotSpeed(), xAway, yAway, b, spreads[i].GetComponent<AimedSpread>().getNumber(), spreads[i].GetComponent<AimedSpread>().getSpread(), false); }
+                            aimBullets[aimBullets.Count - 1].GetComponent<SpriteRenderer>().material.SetColor("_Color", Color.red);
+                        }
+                    }
+                }
+            }
+            if (boss.GetComponent<PhaseControl>().getPhase() <= 2)
+            {
+                for (int i = 0; i < spawnerSpawners.Count; i++)
+                {
+                    spawnerSpawners[i].GetComponent<Ring>().setPos(position);
+                    if (count % spawnerSpawners[i].GetComponent<Ring>().getSpawnDelay() == 0)
+                    {
+                        for (int b = 0; b < spawnerSpawners[i].GetComponent<Ring>().getNumber(); b++)
+                        {
+                            explosiveSpawners.Add(Instantiate(bulletSpawner));
+                            explosiveSpawners[explosiveSpawners.Count - 1].GetComponent<BulletSpawner>().SpawnDirectional(spawnerSpawners[i].GetComponent<Ring>().getPos().x + spawnerSpawners[i].GetComponent<Ring>().getXDiff(), spawnerSpawners[i].GetComponent<Ring>().getPos().y + spawnerSpawners[i].GetComponent<Ring>().getYDiff(), spawnerSpawners[i].GetComponent<Ring>().getShotSpeed(), 360 * b / (spawnerSpawners[i].GetComponent<Ring>().getNumber()), 50, .15f, 5, false, (360 / (spawnerSpawners[i].GetComponent<Ring>().getNumber())) / 2);
+                        }
+                    }
                 }
             }
         }
@@ -185,10 +216,15 @@ public class Spawner : MonoBehaviour
             }
         }
         if (Input.GetKey(KeyCode.Z))
-        {   
-            Debug.Log("Z press");
-            playerBullets.Add(Instantiate(playerBullet));
-            playerBullets[playerBullets.Count-1].GetComponent<PlayerBullet>().SpawnDirectional(player.transform.position.x, player.transform.position.y, 8, 270);
+        {
+            if (firing)
+            {
+                if (count % 3 == 0)
+                {
+                    playerBullets.Add(Instantiate(playerBullet));
+                    playerBullets[playerBullets.Count - 1].GetComponent<PlayerBullet>().SpawnDirectional(player.transform.position.x, player.transform.position.y, 8, 270);
+                }
+            }
         }
     }
 
@@ -223,6 +259,7 @@ public class Spawner : MonoBehaviour
         spawnerSpawners[spawnerSpawners.Count - 1].GetComponent<Ring>().setShotSpeed(speed);
         spawnerSpawners[spawnerSpawners.Count - 1].GetComponent<Ring>().setSpawnOnBoss(onBoss);
     }
+    
 
     //boss methods - sets
     void setSizeDiff(int x, int y) { xSizeDiff = x; ySizeDiff = y; }

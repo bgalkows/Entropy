@@ -137,13 +137,28 @@ Prefab:
       objectReference: {fileID: 1363123431}
     - target: {fileID: 114405616139947132, guid: 25ca62d4c8146d746a3b7291f047a701,
         type: 2}
-      propertyPath: playerBullet
+      propertyPath: phaseControl
       value: 
-      objectReference: {fileID: 1021326584077002, guid: 664df0d8165007b4f92845274a8b02fd,
+      objectReference: {fileID: 169014666}
+    - target: {fileID: 1363381030871702, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
+      propertyPath: m_Name
+      value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 114365410385963580, guid: 25ca62d4c8146d746a3b7291f047a701,
         type: 2}
-    m_RemovedComponents: []
+      propertyPath: boss
+      value: 
+      objectReference: {fileID: 1969746817}
+    m_RemovedComponents:
+    - {fileID: 114135113470687590, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &169014666 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114365410385963580, guid: 25ca62d4c8146d746a3b7291f047a701,
+    type: 2}
+  m_PrefabInternal: {fileID: 169014665}
+  m_Script: {fileID: 11500000, guid: a57f42e5dabeb2142b26488d4ad5cf5a, type: 3}
 --- !u!224 &490456041 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224026223045251332, guid: c35e9d9947a79d945b83f836a1ac7ce5,
@@ -203,6 +218,7 @@ Prefab:
       objectReference: {fileID: 1363123435}
     m_RemovedComponents:
     - {fileID: 114708316729133944, guid: a2791c189ee78b74b9218c535cf5fee4, type: 2}
+    - {fileID: 61095142036891532, guid: a2791c189ee78b74b9218c535cf5fee4, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: a2791c189ee78b74b9218c535cf5fee4, type: 2}
   m_IsPrefabParent: 0
 --- !u!114 &1177197106 stripped
@@ -561,6 +577,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c35e9d9947a79d945b83f836a1ac7ce5, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1969746817 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1363381030871702, guid: 25ca62d4c8146d746a3b7291f047a701,
+    type: 2}
+  m_PrefabInternal: {fileID: 169014665}
 --- !u!1 &1991814628
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,4 +27,17 @@ public class PlayerBullet : MonoBehaviour {
         position = new Vector2(x, y);
     }
 
+    void onTriggerEnter2D(Collider2D c)
+    {
+        print("true");
+        if (c.gameObject.tag == "Boss")
+        {
+            Destroy(gameObject);
+        }
+    }
+    public Vector2 getPos()
+    {
+        return position;
+    }
+
 }
