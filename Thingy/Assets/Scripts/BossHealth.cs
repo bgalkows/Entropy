@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BossHealth : MonoBehaviour
 {
@@ -16,8 +17,9 @@ public class BossHealth : MonoBehaviour
     public Image secondTick;
     public Image thirdTick;
 
-    public PhaseControl PhaseControl;
+    public SpriteRenderer renderer;
 
+    public PhaseControl PhaseControl;
 
     // Use this for initialization
     void Start ()
@@ -26,6 +28,8 @@ public class BossHealth : MonoBehaviour
         currentBossHealth = startingBossHealth;
 
         PhaseControl = GameObject.Find("Boss").GetComponent<PhaseControl>();
+
+        renderer = GameObject.Find("Boss").GetComponent<SpriteRenderer>();
     }
 	
 	// Update is called once per frame
@@ -49,14 +53,67 @@ public class BossHealth : MonoBehaviour
         {
             thirdTick.color = new Color(0, 0, 0, 0);
         }
-    }
 
+        if (bossHealthSlider.value <= 0)
+        {
+            BossDeath();
+        }
+    }
 
     void BossDeath()
     {
-
         bossIsDead = true;
-        
+        StartCoroutine("nextLevel");
+    }
+
+    IEnumerator nextLevel()
+    {
+        //RESTART BOSS HEALTH
+        //currentHealth = 100;
+        //HealthBar.healthSlider.value = currentHealth;
+
+        //flashing!
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.5f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.5f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.5f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.5f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.25f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.25f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.15f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.15f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(0, 0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        renderer.color = new Color(255, 255, 255, 255);
+        renderer.color = new Color(0, 0, 0, 0);
+
+        yield return new WaitForSeconds(3f);
+
         //next level
+        SceneManager.LoadScene("Lvl2");
+
     }
 }

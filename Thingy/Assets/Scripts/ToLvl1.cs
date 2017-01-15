@@ -22,6 +22,6 @@ public class ToLvl1 : MonoBehaviour
     IEnumerator waitThreeSeconds()
     {
         yield return new WaitForSeconds(3f);
-        SceneManager.LoadScene("Angela's Playground");
+        SceneManager.LoadScene("brett playground");
     }
 }
