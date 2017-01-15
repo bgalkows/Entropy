@@ -66,13 +66,14 @@ public class BossHealth : MonoBehaviour
 
     void BossDeath()
     {
-        bossIsDead = true;
+        
 
         if (!once)
         {
             bossLives++;
             Debug.Log("BossLives" + " " + bossLives);
             once = true;
+            bossIsDead = true;
         }
       
         StartCoroutine("nextLevel");

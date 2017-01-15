@@ -72,6 +72,7 @@ public class BossHealth2 : MonoBehaviour
             bossLives++;
             Debug.Log("BossLives2" + " " + bossLives);
             once = true;
+            bossIsDead = true;
         }
 
         StartCoroutine("nextLevel");
