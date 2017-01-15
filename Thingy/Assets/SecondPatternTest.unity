@@ -529,6 +529,24 @@ Prefab:
       propertyPath: sat
       value: 
       objectReference: {fileID: 1611223552}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4690459859284964, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 61887281897219006, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 61887281897219006, guid: 2a3700b7d5f6ef449b50adc68a997db2,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2a3700b7d5f6ef449b50adc68a997db2, type: 2}
   m_IsPrefabParent: 0
