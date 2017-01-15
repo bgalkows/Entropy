@@ -74,11 +74,11 @@ public class BossHealth : MonoBehaviour
 
         //flashing!
         renderer.color = new Color(0, 0, 0, 0);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.25f);
         renderer.color = new Color(255, 255, 255, 255);
         yield return new WaitForSeconds(1f);
         renderer.color = new Color(0, 0, 0, 0);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         renderer.color = new Color(255, 255, 255, 255);
         yield return new WaitForSeconds(0.5f);
         renderer.color = new Color(0, 0, 0, 0);
