@@ -72,7 +72,6 @@ public class BossHealth3 : MonoBehaviour
             bossLives++;
             Debug.Log("BossLives3" + " " + bossLives);
             once = true;
-            bossIsDead = true;
         }
     }
 

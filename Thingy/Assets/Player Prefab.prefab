@@ -24,7 +24,6 @@ GameObject:
   - component: {fileID: 50214607509551702}
   - component: {fileID: 61095142036891532}
   - component: {fileID: 114708316729133944}
-  - component: {fileID: 114750251323031830}
   m_Layer: 0
   m_Name: Player Prefab
   m_TagString: Player
@@ -120,22 +119,6 @@ MonoBehaviour:
   flashColor: {r: 1, g: 0, b: 0, a: 0.1}
   isDead: 0
   damaged: 1
---- !u!114 &114750251323031830
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1937865341692674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47f02fe07c8c12d409c926a227ad6a88, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 0
-  increaseTime: 0
-  score: 0
-  total: 0
-  heartsLeft: 0
 --- !u!212 &212245799892597580
 SpriteRenderer:
   m_ObjectHideFlags: 1
