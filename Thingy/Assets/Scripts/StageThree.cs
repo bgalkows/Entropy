@@ -67,7 +67,20 @@ public class StageThree: MonoBehaviour
         //addSpread(160, 20, .1f, 8, true, 0, 0, true, false);
         for (int i = 0; i < 3; i++)
         {
-            addSpiral(Random.value*360,(int)(Random.value*10),Random.value/100,(int)(Random.value*3),true,0,0,false);
+            addSpiral(safeRandomValue()*360,(int)(safeRandomValue()*10), safeRandomValue()/ 100,(int)(safeRandomValue() * 3),true,0,0,false);
+        }
+    }
+
+    public float safeRandomValue()
+    {
+        float attemptedRand = Random.value;
+        if(attemptedRand == 0)
+        {
+            return attemptedRand + 0.01f;
+        }
+        else
+        {
+            return attemptedRand;
         }
     }
 
@@ -219,8 +232,8 @@ public class StageThree: MonoBehaviour
                     {
                         spirals[i].GetComponent<Spiral>().setSpiralPos(position);
                     }
-                    spirals[i].GetComponent<Spiral>().setSpiralDegInc((int)(Random.value * 360));
-                    spirals[i].GetComponent<Spiral>().setSpiralShotSpeed(Random.value / 100);
+                    spirals[i].GetComponent<Spiral>().setSpiralDegInc((int)(safeRandomValue() * 360));
+                    spirals[i].GetComponent<Spiral>().setSpiralShotSpeed(safeRandomValue() / 100);
                     if (count % spirals[i].GetComponent<Spiral>().getSpiralSpawnDelay() == 0)
                     {
                         spBullets.Add(Instantiate(shot));

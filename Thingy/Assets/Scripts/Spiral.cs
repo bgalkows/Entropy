@@ -17,7 +17,7 @@ public class Spiral : MonoBehaviour {
     }
     public void incrementDeg()
     {
-        if (count % spiralSpawnDelay == 0)
+        if (count % (spiralSpawnDelay) == 0)
         {
             if (cw)
             {
