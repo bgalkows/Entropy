@@ -215,6 +215,7 @@ MonoBehaviour:
   thirdTick: {fileID: 915254308}
   renderer: {fileID: 0}
   PhaseControl: {fileID: 0}
+  bossLives: 0
 --- !u!1 &406956964
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,7 +1294,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 3.119
       objectReference: {fileID: 0}
     - target: {fileID: 4186351995186312, guid: 25ca62d4c8146d746a3b7291f047a701, type: 2}
       propertyPath: m_LocalPosition.z
